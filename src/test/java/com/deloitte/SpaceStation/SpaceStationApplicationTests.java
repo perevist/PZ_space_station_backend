@@ -1,4 +1,4 @@
-package com.delloite.SpaceStation;
+package com.deloitte.SpaceStation;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

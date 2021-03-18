@@ -1,4 +1,4 @@
-package com.delloite.SpaceStation;
+package com.deloitte.SpaceStation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,5 +9,4 @@ public class SpaceStationApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpaceStationApplication.class, args);
     }
-
 }
