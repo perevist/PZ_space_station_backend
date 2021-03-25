@@ -1,5 +1,6 @@
 package com.deloitte.SpaceStation.user;
 
+import com.deloitte.SpaceStation.user.account.Account;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Data
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,4 +20,7 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
     private String email;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Account account;
 }
