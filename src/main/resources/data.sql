@@ -42,6 +42,17 @@ CREATE TABLE users (
         ON DELETE CASCADE
 );
 
+CREATE TABLE verification_tokens (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    token VARCHAR(255) NOT NULL,
+    user_id BIGINT NOT NULL,
+    expiry_date DATE NOT NULL,
+
+    FOREIGN KEY (user_id)
+        REFERENCES users (id)
+        ON DELETE CASCADE
+);
+
 CREATE TABLE reservations (
     id BIGINT AUTO_INCREMENT  PRIMARY KEY,
     start_date DATE NOT NULL,

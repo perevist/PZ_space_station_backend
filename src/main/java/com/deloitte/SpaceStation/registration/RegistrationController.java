@@ -1,14 +1,14 @@
 package com.deloitte.SpaceStation.registration;
 
 import com.deloitte.SpaceStation.user.UserResponseDto;
+import com.deloitte.SpaceStation.util.FeedbackMessage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController("/registration")
+@RestController
+@RequestMapping("/registration")
 @RequiredArgsConstructor
 public class RegistrationController {
 
@@ -17,5 +17,10 @@ public class RegistrationController {
     @PostMapping
     public UserResponseDto registerUser(@RequestBody @Valid RegistrationRequest registrationRequest) {
         return registrationService.registerUser(registrationRequest);
+    }
+
+    @GetMapping("/accountVerification/{token}")
+    public FeedbackMessage verifyAccount(@PathVariable String token) {
+        return registrationService.activateAccount(token);
     }
 }

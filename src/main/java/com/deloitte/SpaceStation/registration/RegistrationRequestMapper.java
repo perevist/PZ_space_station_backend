@@ -42,7 +42,7 @@ public class RegistrationRequestMapper {
         account.setAccountNonExpired(true);
         account.setAccountNonLocked(true);
         account.setCredentialsNonExpired(true);
-        account.setEnabled(true);
+        account.setEnabled(false);
         Authority authority = authorityRepository.findByName(ROLE_USER);
         account.setAuthorities(Set.of(authority));
         return account;

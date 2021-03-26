@@ -12,7 +12,9 @@ public enum Error {
     UNAUTHORIZED_REQUEST(null, HttpStatus.UNAUTHORIZED),
     BAD_LOGIN_CREDENTIALS("Bad login credentials", HttpStatus.UNAUTHORIZED),
     USERNAME_ALREADY_EXISTS("Username already exists", HttpStatus.CONFLICT),
-    EMAIL_ALREADY_EXISTS("Email already exists", HttpStatus.CONFLICT);
+    EMAIL_ALREADY_EXISTS("Email already exists", HttpStatus.CONFLICT),
+    INCORRECT_VERIFICATION_TOKEN("The verification token is incorrect", HttpStatus.BAD_REQUEST),
+    VERIFICATION_TOKEN_IS_NOT_VALID("The verification token is not valid", HttpStatus.CONFLICT);
 
     private final String message;
     private final HttpStatus httpStatus;
