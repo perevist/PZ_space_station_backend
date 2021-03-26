@@ -19,13 +19,13 @@ public class MailService {
     private String emailAddress;
 
     @Async
-    public void sendMail(String subject, String email, String content) {
+    public void sendMail(String subject, String email, String content, Boolean htmlMode) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setFrom(emailAddress);
             messageHelper.setTo(email);
             messageHelper.setSubject(subject);
-            messageHelper.setText(content);
+            messageHelper.setText(content, htmlMode);
         };
 
         try {
