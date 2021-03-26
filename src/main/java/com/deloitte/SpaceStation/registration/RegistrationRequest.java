@@ -23,6 +23,6 @@ public class RegistrationRequest {
     @Size(min = 6, max = 30, message = "Username must be between 6 and 30 characters")
     private String username;
     @NotBlank(message = "Password can not be blank")
-    @Size(min = 6, message = "Password length can not be less than 6")
+    @Size(min = 6, max = 30, message = "Password length must be between 6 and 30 characters")
     private String password;
 }
