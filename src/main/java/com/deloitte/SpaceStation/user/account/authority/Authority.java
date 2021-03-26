@@ -1,4 +1,4 @@
-package com.deloitte.SpaceStation.user.account;
+package com.deloitte.SpaceStation.user.account.authority;
 
 import lombok.Data;
 

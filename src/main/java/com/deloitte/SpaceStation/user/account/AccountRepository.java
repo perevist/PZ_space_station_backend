@@ -9,4 +9,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("SELECT a FROM Account a LEFT JOIN FETCH a.authorities WHERE a.username=?1")
     Optional<Account> findByUsername(String username);
+
+    boolean existsByUsername(String username);
 }

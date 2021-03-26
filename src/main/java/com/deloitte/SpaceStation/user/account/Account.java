@@ -1,5 +1,6 @@
 package com.deloitte.SpaceStation.user.account;
 
+import com.deloitte.SpaceStation.user.account.authority.Authority;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

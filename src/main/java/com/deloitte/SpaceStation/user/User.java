@@ -21,6 +21,6 @@ public class User {
     private String phoneNumber;
     private String email;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Account account;
 }
