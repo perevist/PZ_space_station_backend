@@ -1,6 +1,6 @@
 package com.deloitte.SpaceStation.registration;
 
-import com.deloitte.SpaceStation.user.User;
+import com.deloitte.SpaceStation.user.model.User;
 import com.deloitte.SpaceStation.user.account.Account;
 import com.deloitte.SpaceStation.user.account.authority.Authority;
 import com.deloitte.SpaceStation.user.account.authority.AuthorityRepository;

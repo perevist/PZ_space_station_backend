@@ -1,6 +1,6 @@
 package com.deloitte.SpaceStation.registration;
 
-import com.deloitte.SpaceStation.user.UserResponseDto;
+import com.deloitte.SpaceStation.user.model.UserResponseDto;
 import com.deloitte.SpaceStation.util.FeedbackMessage;
 
 public interface RegistrationService {

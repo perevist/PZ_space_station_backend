@@ -2,7 +2,11 @@ package com.deloitte.SpaceStation.registration;
 
 import com.deloitte.SpaceStation.mail.ActivationEmailSender;
 import com.deloitte.SpaceStation.registration.verificationtoken.VerificationTokenService;
-import com.deloitte.SpaceStation.user.*;
+import com.deloitte.SpaceStation.user.model.User;
+import com.deloitte.SpaceStation.user.model.UserResponseDto;
+import com.deloitte.SpaceStation.user.repository.UserRepository;
+import com.deloitte.SpaceStation.user.util.UserResponseDtoMapper;
+import com.deloitte.SpaceStation.user.util.UserValidator;
 import com.deloitte.SpaceStation.util.FeedbackMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

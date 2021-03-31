@@ -1,6 +1,6 @@
 package com.deloitte.SpaceStation.reservation;
 
-import com.deloitte.SpaceStation.user.User;
+import com.deloitte.SpaceStation.user.model.User;
 import com.deloitte.SpaceStation.worksite.Worksite;
 import lombok.Data;
 

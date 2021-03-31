@@ -1,4 +1,4 @@
-package com.deloitte.SpaceStation.user;
+package com.deloitte.SpaceStation.user.model;
 
 import lombok.Builder;
 import lombok.Getter;

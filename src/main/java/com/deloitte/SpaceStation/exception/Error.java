@@ -14,7 +14,8 @@ public enum Error {
     USERNAME_ALREADY_EXISTS("Username already exists", HttpStatus.CONFLICT),
     EMAIL_ALREADY_EXISTS("Email already exists", HttpStatus.CONFLICT),
     INCORRECT_VERIFICATION_TOKEN("The verification token is incorrect", HttpStatus.BAD_REQUEST),
-    VERIFICATION_TOKEN_IS_NOT_VALID("The verification token is not valid", HttpStatus.CONFLICT);
+    VERIFICATION_TOKEN_IS_NOT_VALID("The verification token is not valid", HttpStatus.CONFLICT),
+    USER_NOT_FOUND("User not found", HttpStatus.NOT_FOUND);
 
     private final String message;
     private final HttpStatus httpStatus;

@@ -1,8 +1,9 @@
-package com.deloitte.SpaceStation.user;
+package com.deloitte.SpaceStation.user.util;
 
 import com.deloitte.SpaceStation.exception.Error;
 import com.deloitte.SpaceStation.exception.SpaceStationException;
 import com.deloitte.SpaceStation.user.account.AccountValidator;
+import com.deloitte.SpaceStation.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,6 @@
 package com.deloitte.SpaceStation.registration.verificationtoken;
 
-import com.deloitte.SpaceStation.user.User;
+import com.deloitte.SpaceStation.user.model.User;
 import lombok.Data;
 
 import javax.persistence.*;

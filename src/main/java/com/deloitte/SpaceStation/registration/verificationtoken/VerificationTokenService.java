@@ -2,7 +2,7 @@ package com.deloitte.SpaceStation.registration.verificationtoken;
 
 import com.deloitte.SpaceStation.exception.Error;
 import com.deloitte.SpaceStation.exception.SpaceStationException;
-import com.deloitte.SpaceStation.user.User;
+import com.deloitte.SpaceStation.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
