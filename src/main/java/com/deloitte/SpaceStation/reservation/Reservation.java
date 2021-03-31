@@ -1,10 +1,12 @@
 package com.deloitte.SpaceStation.reservation;
 
 import com.deloitte.SpaceStation.user.User;
+import com.deloitte.SpaceStation.worksite.Worksite;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,6 +23,17 @@ public class Reservation {
     @Column(name = "worksite_id")
     private Long worksiteId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "owner_id")
     private User owner;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "reserved_worksites",
+            joinColumns = @JoinColumn(name = "reservation_id"),
+            inverseJoinColumns = @JoinColumn(name = "worksite_id")
+    )
+    List<Worksite> worksites;
 }
