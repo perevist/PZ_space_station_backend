@@ -54,6 +54,21 @@ CREATE TABLE verification_tokens (
         ON DELETE CASCADE
 );
 
+CREATE TABLE rooms (
+                       id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                       name VARCHAR(45),
+                       floor BIGINT NOT NULL
+);
+
+CREATE TABLE worksites (
+                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                           room_id BIGINT NOT NULL,
+                           worksite_in_room_id BIGINT NOT NULL,
+                           FOREIGN KEY (room_id)
+                               REFERENCES rooms(id)
+                               ON DELETE CASCADE
+);
+
 CREATE TABLE reservations (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     start_date DATE NOT NULL,
@@ -68,34 +83,14 @@ CREATE TABLE reservations (
 
     FOREIGN KEY (owner_id)
         REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (worksite_id)
+        REFERENCES worksites(id)
         ON DELETE CASCADE
 );
-CREATE TABLE rooms (
-       id BIGINT AUTO_INCREMENT PRIMARY KEY,
-       name VARCHAR(45),
-       floor BIGINT NOT NULL
-);
 
-CREATE TABLE worksites (
-       id BIGINT AUTO_INCREMENT PRIMARY KEY,
-       room_id BIGINT NOT NULL,
-       site BIGINT NOT NULL,
-       FOREIGN KEY (room_id)
-       REFERENCES rooms(id)
-           ON DELETE CASCADE
-);
-CREATE TABLE reserved_worksites (
-      worksite_id BIGINT,
-      reservation_id BIGINT,
 
-      FOREIGN KEY (worksite_id)
-          REFERENCES worksites(id)
-          ON DELETE CASCADE ON UPDATE CASCADE,
-
-      FOREIGN KEY (reservation_id)
-          REFERENCES reservations(id)
-          ON DELETE CASCADE
-);
 
 -- insert data --
 INSERT INTO accounts (username, password, account_non_expired, account_non_locked, credentials_non_expired, enabled)
@@ -134,7 +129,7 @@ VALUES
 ('Pokój 6', 2),
 ('Pokój 7', 2);
 
-INSERT INTO worksites (room_id, site)
+INSERT INTO worksites (room_id, worksite_in_room_id)
 VALUES
 (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6),
 (2, 1), (2, 2), (2, 3), (2, 4), (2, 5),
@@ -154,15 +149,7 @@ VALUES
 ('2021-03-25', '2021-03-27', 2, 4, 4),
 ('2021-03-22', '2021-03-25', 3, 3, 3);
 
-INSERT INTO reserved_worksites(worksite_id, reservation_id)
-VALUES
-       (12, 1),
-       (13, 2),
-       (14, 3),
-       (2, 4),
-       (1, 5),
-       (2, 6),
-       (3, 7);
+
 
 
 

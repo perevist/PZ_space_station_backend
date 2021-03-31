@@ -15,5 +15,6 @@ public class Worksite {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
-    private Long site;
+    @JoinColumn(name = "worksite_in_room_id")
+    private Long worksiteInRoomId;
 }

@@ -6,7 +6,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data
@@ -20,8 +19,9 @@ public class Reservation {
     private LocalDate startDate;
     @Column(name = "end_date")
     private LocalDate endDate;
-    @Column(name = "worksite_id")
-    private Long worksiteId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "worksite_id")
+    private Worksite worksite;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
@@ -29,11 +29,4 @@ public class Reservation {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "reserved_worksites",
-            joinColumns = @JoinColumn(name = "reservation_id"),
-            inverseJoinColumns = @JoinColumn(name = "worksite_id")
-    )
-    List<Worksite> worksites;
 }

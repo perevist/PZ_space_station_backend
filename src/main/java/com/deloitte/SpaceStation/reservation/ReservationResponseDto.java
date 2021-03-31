@@ -9,9 +9,11 @@ import java.time.LocalDate;
 @Builder
 public class ReservationResponseDto {
     private Long id;
-    private Long workSiteId;
     private String ownerFirstName;
     private String ownerLastName;
+    private Long roomId;
+    private Long roomWorkSiteId;
+    private Long worksiteId;
     private LocalDate startDate;
     private LocalDate endDate;
 }
