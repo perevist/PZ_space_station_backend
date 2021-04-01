@@ -1,6 +1,6 @@
 package com.deloitte.SpaceStation.worksite;
 
-import com.deloitte.SpaceStation.room.Room;
+import com.deloitte.SpaceStation.room.model.Room;
 import lombok.Data;
 
 import javax.persistence.*;

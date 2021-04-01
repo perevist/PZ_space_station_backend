@@ -15,7 +15,11 @@ public enum Error {
     EMAIL_ALREADY_EXISTS("Email already exists", HttpStatus.CONFLICT),
     INCORRECT_VERIFICATION_TOKEN("The verification token is incorrect", HttpStatus.BAD_REQUEST),
     VERIFICATION_TOKEN_IS_NOT_VALID("The verification token is not valid", HttpStatus.CONFLICT),
-    USER_NOT_FOUND("User not found", HttpStatus.NOT_FOUND);
+    USER_NOT_FOUND("User not found", HttpStatus.NOT_FOUND),
+
+    START_DATE_NOT_PASSED("Start date not passed", HttpStatus.BAD_REQUEST),
+    END_DATE_NOT_PASSED("End date not passed", HttpStatus.BAD_REQUEST),
+    END_DATE_IS_BEFORE_START_DATE("End date is before start date", HttpStatus.BAD_REQUEST);
 
     private final String message;
     private final HttpStatus httpStatus;

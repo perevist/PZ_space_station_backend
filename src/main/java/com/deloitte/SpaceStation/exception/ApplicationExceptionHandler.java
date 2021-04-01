@@ -1,5 +1,6 @@
 package com.deloitte.SpaceStation.exception;
 
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -51,6 +53,20 @@ public class ApplicationExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ValidationErrorInfo(errors));
+    }
 
+    @ExceptionHandler(value = TypeMismatchException.class)
+    public ResponseEntity<ErrorInfo> handleTypeMismatchException(TypeMismatchException ex) {
+        Class<?> requiredType = ex.getRequiredType();
+
+        if (requiredType == LocalDate.class) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorInfo("Date is not in YYYY-MM-DD format"));
+        } else if (requiredType == Integer.class || requiredType == Long.class) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorInfo("Passed number is invalid"));
+        }
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 }

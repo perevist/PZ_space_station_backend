@@ -55,18 +55,20 @@ CREATE TABLE verification_tokens (
 );
 
 CREATE TABLE rooms (
-                       id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                       name VARCHAR(45),
-                       floor BIGINT NOT NULL
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(45),
+    floor INT NOT NULL,
+    number_of_worksites BIGINT NOT NULL
 );
 
 CREATE TABLE worksites (
-                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                           room_id BIGINT NOT NULL,
-                           worksite_in_room_id BIGINT NOT NULL,
-                           FOREIGN KEY (room_id)
-                               REFERENCES rooms(id)
-                               ON DELETE CASCADE
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    room_id BIGINT NOT NULL,
+    worksite_in_room_id BIGINT NOT NULL,
+
+    FOREIGN KEY (room_id)
+        REFERENCES rooms(id)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE reservations (
@@ -119,19 +121,19 @@ VALUES
 ('Ola', 'Biernacka', 888123111, 'olabiernackai@wp.pl', 3),
 ('Michal', 'Kowal', 905123111, 'mk@wp.pl', 4);
 
-INSERT INTO rooms (name, floor)
+INSERT INTO rooms (name, floor, number_of_worksites)
 VALUES
-('Pokój 1', 1),
-('Pokój 2', 1),
-('Pokój 3', 1),
-('Pokój 4', 1),
-('Pokój 5', 2),
-('Pokój 6', 2),
-('Pokój 7', 2);
+('Pokój 1', 1, 2),
+('Pokój 2', 1, 2),
+('Pokój 3', 1, 3),
+('Pokój 4', 1, 2),
+('Pokój 5', 2, 2),
+('Pokój 6', 2, 2),
+('Pokój 7', 2, 2);
 
 INSERT INTO worksites (room_id, worksite_in_room_id)
 VALUES
-(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6),
+(1, 1), (1, 2),
 (2, 1), (2, 2), (2, 3), (2, 4), (2, 5),
 (3, 1), (3, 2), (3, 3),
 (4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (4, 6),
@@ -141,13 +143,14 @@ VALUES
 
 INSERT INTO reservations (start_date, end_date, worksite_id, owner_id, user_id)
 VALUES
-('2021-02-20', '2021-02-22', 12, 1, 1),
-('2021-02-20', '2021-02-22', 13, 2, 2),
-('2021-02-20', '2021-02-22', 14, 4, 4),
+('2021-02-20', '2021-02-22', 5, 1, 1),
+('2021-02-20', '2021-02-22', 4, 2, 2),
+('2021-02-20', '2021-02-22', 3, 4, 4),
 ('2021-03-21', '2021-03-24', 2, 1, 1),
 ('2021-03-20', '2021-03-21', 1, 2, 2),
-('2021-03-25', '2021-03-27', 2, 4, 4),
-('2021-03-22', '2021-03-25', 3, 3, 3);
+
+('2021-03-26', '2021-03-30', 1, 4, 4),
+('2021-03-27', '2021-03-29', 2, 3, 3);
 
 
 

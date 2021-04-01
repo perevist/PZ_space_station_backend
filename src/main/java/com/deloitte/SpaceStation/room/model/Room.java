@@ -1,4 +1,4 @@
-package com.deloitte.SpaceStation.room;
+package com.deloitte.SpaceStation.room.model;
 
 import lombok.Data;
 import javax.persistence.*;
@@ -12,5 +12,7 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Long floor;
+    private int floor;
+    @Column(name = "number_of_worksites")
+    private Long numberOfWorksites;
 }
