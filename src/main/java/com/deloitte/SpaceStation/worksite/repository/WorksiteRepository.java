@@ -18,7 +18,7 @@ public interface WorksiteRepository extends JpaRepository<Worksite, Long> {
     List<Worksite> getAllByAvailabilityDate(LocalDate startDate, LocalDate endDate);
 
 
-    @Query("SELECT w FROM Worksite w WHERE w.room = :roomId AND w.id NOT IN (" +
+    @Query("SELECT w FROM Worksite w WHERE w.room.id = :roomId AND w.id NOT IN (" +
             "SELECT w2.id FROM Worksite w2 JOIN Reservation re ON w2 = re.worksite " +
             "WHERE (re.startDate BETWEEN :startDate AND :endDate) " +
             "OR (re.endDate BETWEEN :startDate AND :endDate) " +
