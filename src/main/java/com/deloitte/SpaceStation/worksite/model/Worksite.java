@@ -1,10 +1,12 @@
 package com.deloitte.SpaceStation.worksite.model;
 
 import com.deloitte.SpaceStation.room.model.Room;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Data
 @Table(name = "worksites")
