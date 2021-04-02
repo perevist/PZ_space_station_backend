@@ -1,6 +1,7 @@
 package com.deloitte.SpaceStation.reservation;
 
 import com.deloitte.SpaceStation.AbstractTest;
+import com.deloitte.SpaceStation.reservation.controller.ReservationController;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

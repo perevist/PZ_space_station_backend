@@ -76,10 +76,10 @@ CREATE TABLE reservations (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     worksite_id BIGINT NOT NULL,
+    reservation_maker_id BIGINT NOT NULL,
     owner_id BIGINT NOT NULL,
-    user_id BIGINT NOT NULL,
 
-    FOREIGN KEY (user_id)
+    FOREIGN KEY (reservation_maker_id)
         REFERENCES users(id)
         ON DELETE CASCADE,
 
@@ -91,8 +91,6 @@ CREATE TABLE reservations (
         REFERENCES worksites(id)
         ON DELETE CASCADE
 );
-
-
 
 -- insert data --
 INSERT INTO accounts (username, password, account_non_expired, account_non_locked, credentials_non_expired, enabled)
@@ -141,11 +139,11 @@ VALUES
 (6, 1), (6, 2), (6, 3),
 (7, 1), (7, 2);
 
-INSERT INTO reservations (start_date, end_date, worksite_id, owner_id, user_id)
+INSERT INTO reservations (start_date, end_date, worksite_id, reservation_maker_id, owner_id)
 VALUES
 ('2021-02-20', '2021-02-22', 5, 1, 1),
-('2021-02-20', '2021-02-22', 4, 2, 2),
-('2021-02-20', '2021-02-22', 3, 4, 4),
+('2021-02-20', '2021-02-22', 4, 3, 2),
+('2021-02-20', '2021-02-22', 3, 2, 4),
 ('2021-03-21', '2021-03-24', 2, 1, 1),
 ('2021-03-20', '2021-03-21', 1, 2, 2),
 

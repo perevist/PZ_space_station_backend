@@ -1,4 +1,4 @@
-package com.deloitte.SpaceStation.worksite;
+package com.deloitte.SpaceStation.worksite.model;
 
 import com.deloitte.SpaceStation.room.model.Room;
 import lombok.Data;

@@ -19,7 +19,10 @@ public enum Error {
 
     START_DATE_NOT_PASSED("Start date not passed", HttpStatus.BAD_REQUEST),
     END_DATE_NOT_PASSED("End date not passed", HttpStatus.BAD_REQUEST),
-    END_DATE_IS_BEFORE_START_DATE("End date is before start date", HttpStatus.BAD_REQUEST);
+    END_DATE_IS_BEFORE_START_DATE("End date is before start date", HttpStatus.BAD_REQUEST),
+
+    WORKSITE_NOT_FOUND("Worksite not found", HttpStatus.NOT_FOUND),
+    WORKSITE_ALREADY_BOOKED("Worksite is already booked", HttpStatus.CONFLICT);
 
     private final String message;
     private final HttpStatus httpStatus;
