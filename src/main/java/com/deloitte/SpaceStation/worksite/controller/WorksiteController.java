@@ -1,6 +1,6 @@
 package com.deloitte.SpaceStation.worksite.controller;
 
-import com.deloitte.SpaceStation.room.util.RequestValidator;
+import com.deloitte.SpaceStation.util.RequestDateValidator;
 import com.deloitte.SpaceStation.worksite.model.WorksiteResponseDto;
 import com.deloitte.SpaceStation.worksite.service.WorksiteService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/api/worksites")
 public class WorksiteController {
 
-    private final RequestValidator requestValidator;
+    private final RequestDateValidator requestDateValidator;
     private final WorksiteService worksiteService;
 
 
@@ -32,7 +32,7 @@ public class WorksiteController {
                                                   @RequestParam(required = false) Long roomId) {
 
         if (startDate != null || endDate != null) {
-            requestValidator.validatePassedDates(startDate, endDate);
+            requestDateValidator.validatePassedDates(startDate, endDate);
             if (roomId != null) {
                 return worksiteService.getWorksitesByRoomAndAvailabilityDate(roomId, startDate, endDate);
             }

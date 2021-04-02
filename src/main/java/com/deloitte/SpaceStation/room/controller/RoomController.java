@@ -2,7 +2,7 @@ package com.deloitte.SpaceStation.room.controller;
 
 import com.deloitte.SpaceStation.room.model.Room;
 import com.deloitte.SpaceStation.room.service.RoomService;
-import com.deloitte.SpaceStation.room.util.RequestValidator;
+import com.deloitte.SpaceStation.util.RequestDateValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,7 +22,7 @@ import java.util.List;
 public class RoomController {
 
     private final RoomService roomService;
-    private final RequestValidator requestValidator;
+    private final RequestDateValidator requestDateValidator;
 
     @GetMapping("/list")
     public List<Room> getRooms(@RequestParam(required = false)
@@ -34,7 +33,7 @@ public class RoomController {
                                @Positive(message = "Floor must be a positive number") Integer floor) {
 
         if (startDate != null || endDate != null) {
-            requestValidator.validatePassedDates(startDate, endDate);
+            requestDateValidator.validatePassedDates(startDate, endDate);
             if (floor != null) {
                 return roomService.getRoomsByFloorAndAvailabilityDate(floor, startDate, endDate);
             }

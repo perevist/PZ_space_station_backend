@@ -3,7 +3,7 @@ package com.deloitte.SpaceStation.reservation.controller;
 import com.deloitte.SpaceStation.reservation.model.ReservationRequestDto;
 import com.deloitte.SpaceStation.reservation.model.ReservationResponseDto;
 import com.deloitte.SpaceStation.reservation.service.ReservationService;
-import com.deloitte.SpaceStation.reservation.util.ReservationRequestValidator;
+import com.deloitte.SpaceStation.util.RequestDateValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class ReservationController {
 
     private final ReservationService reservationService;
-    private final ReservationRequestValidator reservationRequestValidator;
+    private final RequestDateValidator requestDateValidator;
 
     @GetMapping("/list")
     public List<ReservationResponseDto> getReservation() {
@@ -25,7 +25,9 @@ public class ReservationController {
 
     @PostMapping
     public ReservationResponseDto addReservation(@RequestBody @Valid ReservationRequestDto reservationRequestDto) {
-        reservationRequestValidator.validatePassedDates(reservationRequestDto.getStartDate(), reservationRequestDto.getEndDate());
+        requestDateValidator.validatePassedDatesInReservationRequest(
+                reservationRequestDto.getStartDate(),
+                reservationRequestDto.getEndDate());
         return reservationService.addReservation(reservationRequestDto);
     }
 }
