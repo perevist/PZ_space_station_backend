@@ -2,10 +2,13 @@ package com.deloitte.SpaceStation.user.service;
 
 import com.deloitte.SpaceStation.exception.Error;
 import com.deloitte.SpaceStation.exception.SpaceStationException;
+import com.deloitte.SpaceStation.user.account.Account;
+import com.deloitte.SpaceStation.user.model.User;
 import com.deloitte.SpaceStation.user.model.UserResponseDto;
 import com.deloitte.SpaceStation.user.repository.UserRepository;
 import com.deloitte.SpaceStation.user.util.UserResponseDtoMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,5 +68,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAllByFirstNameAndLastName(firstName, lastName).stream()
                 .map(userResponseDtoMapper::mapUserToUserResponseDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserResponseDto getCurrentLoggedUser() {
+        Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentLoggedUser = userRepository.findByUsername(account.getUsername())
+                .orElseThrow(() -> new SpaceStationException(Error.USER_NOT_FOUND));
+        return userResponseDtoMapper.mapUserToUserResponseDto(currentLoggedUser);
     }
 }

@@ -57,4 +57,9 @@ public class UserController {
             return userService.getUsers();
         }
     }
+
+    @GetMapping("/currentLoggedUser")
+    public UserResponseDto getLoggedInUserInfo() {
+        return userService.getCurrentLoggedUser();
+    }
 }

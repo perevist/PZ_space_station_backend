@@ -20,4 +20,5 @@ public interface UserService {
 
     List<UserResponseDto> getUsersByFirstNameAndLastName(String firstName, String lastName);
 
+    UserResponseDto getCurrentLoggedUser();
 }
