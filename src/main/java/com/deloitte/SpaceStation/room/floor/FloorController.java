@@ -18,8 +18,8 @@ public class FloorController {
     private final FloorService floorService;
 
     @GetMapping
-    public Map<String, String> getFloorQuantity() {
-        return Collections.singletonMap("numberOfFloors", floorService.getFloorQuantity().toString());
+    public Map<String, Long> getFloorQuantity() {
+        return Collections.singletonMap("numberOfFloors", floorService.getFloorQuantity());
     }
 }
 
