@@ -19,4 +19,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "(r.endDate BETWEEN :startDate AND :endDate) OR " +
             "(r.startDate <= :startDate AND r.endDate >= :endDate))")
     List<Reservation> findAllByBookedWorksite(Long worksiteId, LocalDate startDate, LocalDate endDate);
+
+    void deleteById(Long id);
 }
