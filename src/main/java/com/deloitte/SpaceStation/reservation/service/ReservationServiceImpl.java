@@ -52,7 +52,8 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationMapper.mapToReservationResponseDto(reservation);
     }
 
-    private void checkIfWorksiteIsAvailable(Long worksiteId, LocalDate startDate, LocalDate endDate) {
+    @Transactional
+    public void checkIfWorksiteIsAvailable(Long worksiteId, LocalDate startDate, LocalDate endDate) {
         List<Reservation> bookedReservations = reservationRepository.
                 findAllByBookedWorksite(worksiteId, startDate, endDate);
 
