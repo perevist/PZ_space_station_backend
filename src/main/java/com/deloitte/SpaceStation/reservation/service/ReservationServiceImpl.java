@@ -52,6 +52,7 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationMapper.mapToReservationResponseDto(reservation);
     }
 
+
     @Transactional
     public void checkIfWorksiteIsAvailable(Long worksiteId, LocalDate startDate, LocalDate endDate) {
         List<Reservation> bookedReservations = reservationRepository.
@@ -67,4 +68,13 @@ public class ReservationServiceImpl implements ReservationService {
         return userRepository.findByUsername(account.getUsername())
                 .orElseThrow(() -> new SpaceStationException(Error.USER_NOT_FOUND));
     }
+
+
+    @Override
+    public void deleteById(Long reservationId) {
+        reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new SpaceStationException(Error.RESERVATION_NOT_FOUND));
+        reservationRepository.deleteById(reservationId);
+    }
+
 }

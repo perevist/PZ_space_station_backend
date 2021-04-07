@@ -22,7 +22,9 @@ public enum Error {
     END_DATE_IS_BEFORE_START_DATE("End date is before start date", HttpStatus.BAD_REQUEST),
 
     WORKSITE_NOT_FOUND("Worksite not found", HttpStatus.NOT_FOUND),
-    WORKSITE_ALREADY_BOOKED("Worksite is already booked", HttpStatus.CONFLICT);
+    WORKSITE_ALREADY_BOOKED("Worksite is already booked", HttpStatus.CONFLICT),
+
+    RESERVATION_NOT_FOUND("Reservation not found", HttpStatus.NOT_FOUND);
 
     private final String message;
     private final HttpStatus httpStatus;
