@@ -3,6 +3,7 @@ package com.deloitte.SpaceStation.reservation.controller;
 import com.deloitte.SpaceStation.reservation.model.ReservationRequestDto;
 import com.deloitte.SpaceStation.reservation.model.ReservationResponseDto;
 import com.deloitte.SpaceStation.reservation.service.ReservationService;
+import com.deloitte.SpaceStation.util.FeedbackMessage;
 import com.deloitte.SpaceStation.util.RequestDateValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,10 +35,10 @@ public class ReservationController {
         return reservationService.addReservation(reservationRequestDto);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<Map<String, String>> deleteReservation(@PathVariable Long id) {
+    @DeleteMapping(value = "/{id}")
+    public FeedbackMessage deleteReservation(@PathVariable Long id) {
         reservationService.deleteById(id);
-        return ResponseEntity.ok(Collections.singletonMap("message", "Delete successfully"));
+        return new FeedbackMessage("Reservation delete successfully");
     }
 }
 
