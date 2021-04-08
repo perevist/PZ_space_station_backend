@@ -1,5 +1,7 @@
 package com.deloitte.SpaceStation.worksite.service;
 
+import com.deloitte.SpaceStation.room.model.Room;
+import com.deloitte.SpaceStation.worksite.model.Worksite;
 import com.deloitte.SpaceStation.worksite.model.WorksiteResponseDto;
 import com.deloitte.SpaceStation.worksite.repository.WorksiteRepository;
 import com.deloitte.SpaceStation.worksite.util.WorksiteResponseDtoMapper;
@@ -43,5 +45,14 @@ public class WorksiteServiceImpl implements WorksiteService {
         return worksiteRepository.getAllByRoomAndAvailabilityDate(roomId, startDate, endDate).stream()
                 .map(WorksiteResponseDtoMapper::mapToWorksiteResponseDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Worksite addWorksite(Long worksiteInRoomId, Room room) {
+        Worksite worksite = new Worksite();
+        worksite.setWorksiteInRoomId(worksiteInRoomId);
+        worksite.setRoom(room);
+        worksite = worksiteRepository.save(worksite);
+        return worksite;
     }
 }
