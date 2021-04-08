@@ -6,13 +6,10 @@ import com.deloitte.SpaceStation.reservation.service.ReservationService;
 import com.deloitte.SpaceStation.util.FeedbackMessage;
 import com.deloitte.SpaceStation.util.RequestDateValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,5 +37,16 @@ public class ReservationController {
         reservationService.deleteById(id);
         return new FeedbackMessage("Reservation delete successfully");
     }
+
+    @PutMapping(value = "/{id}")
+    public ReservationResponseDto putReservation(@PathVariable Long id,
+                                                 @RequestBody @Valid ReservationRequestDto reservationRequestDto) {
+        requestDateValidator.validatePassedDatesInReservationRequest(
+                reservationRequestDto.getStartDate(),
+                reservationRequestDto.getEndDate());
+        return reservationService.putReservation(id, reservationRequestDto);
+    }
+
+
 }
 
