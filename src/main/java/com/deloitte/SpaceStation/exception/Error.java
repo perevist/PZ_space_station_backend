@@ -24,8 +24,7 @@ public enum Error {
     WORKSITE_NOT_FOUND("Worksite not found", HttpStatus.NOT_FOUND),
     WORKSITE_ALREADY_BOOKED("Worksite is already booked", HttpStatus.CONFLICT),
 
-    RESERVATION_NOT_FOUND("Reservation not found", HttpStatus.NOT_FOUND),
-    RESERVATION_ALREADY_EXISTS("Reservation already exists", HttpStatus.NOT_FOUND);
+    RESERVATION_NOT_FOUND("Reservation not found", HttpStatus.NOT_FOUND);
 
     private final String message;
     private final HttpStatus httpStatus;
