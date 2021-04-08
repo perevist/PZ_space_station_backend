@@ -1,5 +1,7 @@
 package com.deloitte.SpaceStation.worksite.service;
 
+import com.deloitte.SpaceStation.room.model.Room;
+import com.deloitte.SpaceStation.worksite.model.Worksite;
 import com.deloitte.SpaceStation.worksite.model.WorksiteResponseDto;
 
 import java.time.LocalDate;
@@ -13,4 +15,6 @@ public interface WorksiteService {
     List<WorksiteResponseDto> getWorksitesByAvailabilityDate(LocalDate startDate, LocalDate endDate);
 
     List<WorksiteResponseDto> getWorksitesByRoomAndAvailabilityDate(Long roomId, LocalDate startDate, LocalDate endDate);
+
+    Worksite addWorksite(Long worksiteInRoomId, Room room);
 }

@@ -6,6 +6,7 @@ import com.deloitte.SpaceStation.room.model.Room;
 import com.deloitte.SpaceStation.room.model.RoomRequestDto;
 import com.deloitte.SpaceStation.room.repository.RoomRepository;
 import com.deloitte.SpaceStation.room.util.RoomMapper;
+import com.deloitte.SpaceStation.worksite.service.WorksiteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;
     private final RoomMapper roomMapper;
+    private final WorksiteService worksiteService;
 
     @Override
     public List<Room> getRooms() {
@@ -46,9 +48,13 @@ public class RoomServiceImpl implements RoomService {
 
         Room room = roomMapper.mapRoomRequestDtoToRoom(roomRequestDto);
         room = roomRepository.save(room);
+
+        for (long worksiteInRoomId = 1; worksiteInRoomId <= roomRequestDto.getNumberOfWorksites(); worksiteInRoomId++) {
+            worksiteService.addWorksite(worksiteInRoomId, room);
+        }
+
         return room;
     }
-
 
     @Transactional
     public void checkIfRoomNameIsAvailable(String name) {
@@ -57,6 +63,4 @@ public class RoomServiceImpl implements RoomService {
             throw new SpaceStationException(Error.ROOM_NAME_IS_NOT_UNIQUE);
         }
     }
-
-
 }
