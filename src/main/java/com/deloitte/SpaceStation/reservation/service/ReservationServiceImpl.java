@@ -10,6 +10,7 @@ import com.deloitte.SpaceStation.reservation.util.ReservationMapper;
 import com.deloitte.SpaceStation.user.account.Account;
 import com.deloitte.SpaceStation.user.model.User;
 import com.deloitte.SpaceStation.user.repository.UserRepository;
+import com.deloitte.SpaceStation.worksite.repository.WorksiteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReservationMapper reservationMapper;
     private final UserRepository userRepository;
+    private final WorksiteRepository worksiteRepository;
 
     @Override
     public List<ReservationResponseDto> getReservations() {
@@ -75,6 +77,25 @@ public class ReservationServiceImpl implements ReservationService {
         reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new SpaceStationException(Error.RESERVATION_NOT_FOUND));
         reservationRepository.deleteById(reservationId);
+    }
+
+    @Override
+    public ReservationResponseDto putReservation(Long id, ReservationRequestDto reservationRequestDto) {
+        checkIfWorksiteIsAvailable(reservationRequestDto.getWorksiteId(), reservationRequestDto.getStartDate(),
+                reservationRequestDto.getEndDate());
+
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new SpaceStationException(Error.RESERVATION_NOT_FOUND));
+
+        reservation.setOwner(userRepository.findById(reservationRequestDto.getOwnerId())
+                .stream().findFirst().orElseThrow(() -> new SpaceStationException(Error.USER_NOT_FOUND)));
+        reservation.setStartDate(reservationRequestDto.getStartDate());
+        reservation.setEndDate(reservationRequestDto.getEndDate());
+        reservation.setWorksite(worksiteRepository.findById(reservationRequestDto.getWorksiteId())
+                .stream().findFirst().orElseThrow(() -> new SpaceStationException(Error.WORKSITE_NOT_FOUND)));
+
+        reservation = reservationRepository.saveAndFlush(reservation);
+        return reservationMapper.mapToReservationResponseDto(reservation);
     }
 
 }
