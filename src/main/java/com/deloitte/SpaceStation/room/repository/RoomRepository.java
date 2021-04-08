@@ -27,5 +27,8 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
             "HAVING COUNT(re.worksite.id) >= (SELECT r2.numberOfWorksites FROM Room r2 WHERE r2 = w.room))")
     List<Room> getAllByFloorAndAvailabilityDate(int floor, LocalDate startDate, LocalDate endDate);
 
+    @Query("SELECT r FROM Room r WHERE r.name = :name")
+    List<Room> findAllByName(String name);
+
     List<Room> getAllByFloor(int floor);
 }
