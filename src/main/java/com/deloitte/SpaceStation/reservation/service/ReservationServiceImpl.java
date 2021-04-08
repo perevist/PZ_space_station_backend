@@ -86,13 +86,11 @@ public class ReservationServiceImpl implements ReservationService {
 
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new SpaceStationException(Error.RESERVATION_NOT_FOUND));
-
-        reservation.setOwner(userRepository.findById(reservationRequestDto.getOwnerId())
-                .stream().findFirst().orElseThrow(() -> new SpaceStationException(Error.USER_NOT_FOUND)));
-        reservation.setStartDate(reservationRequestDto.getStartDate());
-        reservation.setEndDate(reservationRequestDto.getEndDate());
-        reservation.setWorksite(worksiteRepository.findById(reservationRequestDto.getWorksiteId())
-                .stream().findFirst().orElseThrow(() -> new SpaceStationException(Error.WORKSITE_NOT_FOUND)));
+        Reservation reservationRequest = reservationMapper.mapReservationRequestDtoToReservation(reservationRequestDto);
+        reservation.setOwner(reservationRequest.getOwner());
+        reservation.setStartDate(reservationRequest.getStartDate());
+        reservation.setEndDate(reservationRequest.getEndDate());
+        reservation.setWorksite(reservationRequest.getWorksite());
 
         reservation = reservationRepository.saveAndFlush(reservation);
         return reservationMapper.mapToReservationResponseDto(reservation);
