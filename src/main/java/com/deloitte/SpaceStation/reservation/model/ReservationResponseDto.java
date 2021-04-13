@@ -10,11 +10,7 @@ import java.time.LocalDate;
 public class ReservationResponseDto {
     private Long id;
     private Long reservationMakerId;
-    private String reservationMakerFirstName;
-    private String reservationMakerLastName;
     private Long ownerId;
-    private String ownerFirstName;
-    private String ownerLastName;
     private Long worksiteId;
     private Long roomId;
     private Long worksiteInRoomId;

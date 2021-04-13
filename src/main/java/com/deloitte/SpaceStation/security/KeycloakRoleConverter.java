@@ -1,4 +1,4 @@
-package com.deloitte.SpaceStation.security.util;
+package com.deloitte.SpaceStation.security;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.GrantedAuthority;

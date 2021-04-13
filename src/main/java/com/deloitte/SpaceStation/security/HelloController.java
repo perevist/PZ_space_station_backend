@@ -1,4 +1,4 @@
-package com.deloitte.SpaceStation.security.util;
+package com.deloitte.SpaceStation.security;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

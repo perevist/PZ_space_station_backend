@@ -1,6 +1,5 @@
 package com.deloitte.SpaceStation.reservation.model;
 
-import com.deloitte.SpaceStation.user.model.User;
 import com.deloitte.SpaceStation.worksite.model.Worksite;
 import lombok.Data;
 
@@ -18,12 +17,10 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "worksite_id")
     private Worksite worksite;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_maker_id")
-    private User reservationMaker;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "reservation_maker_id")
+    private Long reservationMakerId;
     @JoinColumn(name = "owner_id")
-    private User owner;
+    private Long ownerId;
     @Column(name = "start_date")
     private LocalDate startDate;
     @Column(name = "end_date")
