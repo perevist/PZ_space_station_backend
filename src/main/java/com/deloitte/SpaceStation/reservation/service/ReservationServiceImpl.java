@@ -31,6 +31,30 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public List<ReservationResponseDto> getReservationsByDate(LocalDate startDate, LocalDate endDate) {
+        return reservationRepository.findAllByDate(startDate, endDate).stream()
+                .map(reservationMapper::mapToReservationResponseDto)
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<ReservationResponseDto> getReservationsByDateAndOwnerId(
+            LocalDate startDate, LocalDate endDate, String ownerId) {
+        return reservationRepository.findAllByDateAndOwnerId(startDate, endDate, ownerId).stream()
+                .map(reservationMapper::mapToReservationResponseDto)
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<ReservationResponseDto> getReservationsByOwnerId(String ownerId) {
+        return reservationRepository.findAllByOwnerId(ownerId).stream()
+                .map(reservationMapper::mapToReservationResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public ReservationResponseDto addReservation(ReservationRequestDto reservationRequest) {
         checkIfWorksiteIsAvailable(reservationRequest.getWorksiteId(), reservationRequest.getStartDate(),
                 reservationRequest.getEndDate());

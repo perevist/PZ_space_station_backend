@@ -6,9 +6,11 @@ import com.deloitte.SpaceStation.reservation.service.ReservationService;
 import com.deloitte.SpaceStation.util.FeedbackMessage;
 import com.deloitte.SpaceStation.util.RequestDateValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -20,8 +22,26 @@ public class ReservationController {
     private final RequestDateValidator requestDateValidator;
 
     @GetMapping("/list")
-    public List<ReservationResponseDto> getReservation() {
-        return reservationService.getReservations();
+    public List<ReservationResponseDto> getReservation(@RequestParam(required = false)
+                                                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                                       @RequestParam(required = false)
+                                                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+                                                       @RequestParam(required = false) String ownerId) {
+
+        if (startDate != null || endDate != null) {
+            requestDateValidator.validatePassedDates(startDate, endDate);
+            if (ownerId != null) {
+                return reservationService.getReservationsByDateAndOwnerId(startDate, endDate, ownerId);
+            } else {
+                return reservationService.getReservationsByDate(startDate, endDate);
+            }
+        } else {
+            if (ownerId != null) {
+                return reservationService.getReservationsByOwnerId(ownerId);
+            } else {
+                return reservationService.getReservations();
+            }
+        }
     }
 
     @PostMapping
