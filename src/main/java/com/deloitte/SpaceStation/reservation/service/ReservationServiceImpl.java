@@ -8,6 +8,7 @@ import com.deloitte.SpaceStation.reservation.model.ReservationResponseDto;
 import com.deloitte.SpaceStation.reservation.repository.ReservationRepository;
 import com.deloitte.SpaceStation.reservation.util.ReservationMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,17 +23,21 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final ReservationMapper reservationMapper;
+    private final static int PAGE_SIZE = 8;
 
     @Override
-    public List<ReservationResponseDto> getReservations() {
-        return reservationRepository.findAll().stream()
+    public List<ReservationResponseDto> getReservations(int page) {
+        return reservationRepository.findAllReservations(
+                PageRequest.of(page, PAGE_SIZE))
+                .stream()
                 .map(reservationMapper::mapToReservationResponseDto)
                 .collect(Collectors.toList());
     }
 
+
     @Override
-    public List<ReservationResponseDto> getReservationsByDate(LocalDate startDate, LocalDate endDate) {
-        return reservationRepository.findAllByDate(startDate, endDate).stream()
+    public List<ReservationResponseDto> getReservationsByDate(LocalDate startDate, LocalDate endDate, int page) {
+        return reservationRepository.findAllByDate(startDate, endDate, PageRequest.of(page, PAGE_SIZE)).stream()
                 .map(reservationMapper::mapToReservationResponseDto)
                 .collect(Collectors.toList());
 
@@ -40,16 +45,17 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<ReservationResponseDto> getReservationsByDateAndOwnerId(
-            LocalDate startDate, LocalDate endDate, String ownerId) {
-        return reservationRepository.findAllByDateAndOwnerId(startDate, endDate, ownerId).stream()
+            LocalDate startDate, LocalDate endDate, String ownerId, int page) {
+        return reservationRepository.findAllByDateAndOwnerId(
+                startDate, endDate, ownerId, PageRequest.of(page, PAGE_SIZE)).stream()
                 .map(reservationMapper::mapToReservationResponseDto)
                 .collect(Collectors.toList());
 
     }
 
     @Override
-    public List<ReservationResponseDto> getReservationsByOwnerId(String ownerId) {
-        return reservationRepository.findAllByOwnerId(ownerId).stream()
+    public List<ReservationResponseDto> getReservationsByOwnerId(String ownerId, int page) {
+        return reservationRepository.findAllByOwnerId(ownerId, PageRequest.of(page, PAGE_SIZE)).stream()
                 .map(reservationMapper::mapToReservationResponseDto)
                 .collect(Collectors.toList());
     }

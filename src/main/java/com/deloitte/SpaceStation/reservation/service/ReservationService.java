@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface ReservationService {
 
-    List<ReservationResponseDto> getReservations();
+    List<ReservationResponseDto> getReservations(int page);
 
-    List<ReservationResponseDto> getReservationsByDate(LocalDate startDate, LocalDate endDate);
+    List<ReservationResponseDto> getReservationsByDate(LocalDate startDate, LocalDate endDate, int page);
 
-    List<ReservationResponseDto> getReservationsByDateAndOwnerId(LocalDate startDate, LocalDate endDate, String userId);
+    List<ReservationResponseDto> getReservationsByDateAndOwnerId(LocalDate startDate, LocalDate endDate, String userId, int page);
 
-    List<ReservationResponseDto> getReservationsByOwnerId(String ownerId);
+    List<ReservationResponseDto> getReservationsByOwnerId(String ownerId, int page);
 
     ReservationResponseDto addReservation(ReservationRequestDto reservationRequest);
 
