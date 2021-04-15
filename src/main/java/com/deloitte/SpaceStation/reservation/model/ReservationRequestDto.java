@@ -13,8 +13,7 @@ public class ReservationRequestDto {
     @NotNull(message = "Worksite id can not be blank")
     @Positive(message = "Worksite id must be a positive number")
     private Long worksiteId;
-    @Positive(message = "Owner id must be a positive number")
-    private Long ownerId;
+    private String ownerId;
     @NotNull(message = "Start date can not be blank")
     @FutureOrPresent(message = "Start date must be a future or present date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

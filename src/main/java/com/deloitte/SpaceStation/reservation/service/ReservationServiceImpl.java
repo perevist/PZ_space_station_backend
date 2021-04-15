@@ -7,10 +7,6 @@ import com.deloitte.SpaceStation.reservation.model.ReservationRequestDto;
 import com.deloitte.SpaceStation.reservation.model.ReservationResponseDto;
 import com.deloitte.SpaceStation.reservation.repository.ReservationRepository;
 import com.deloitte.SpaceStation.reservation.util.ReservationMapper;
-import com.deloitte.SpaceStation.user.account.Account;
-import com.deloitte.SpaceStation.user.model.User;
-import com.deloitte.SpaceStation.user.repository.UserRepository;
-import com.deloitte.SpaceStation.worksite.repository.WorksiteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -26,8 +22,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final ReservationMapper reservationMapper;
-    private final UserRepository userRepository;
-    private final WorksiteRepository worksiteRepository;
 
     @Override
     public List<ReservationResponseDto> getReservations() {
@@ -37,23 +31,23 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    @Transactional
     public ReservationResponseDto addReservation(ReservationRequestDto reservationRequest) {
         checkIfWorksiteIsAvailable(reservationRequest.getWorksiteId(), reservationRequest.getStartDate(),
                 reservationRequest.getEndDate());
 
         Reservation reservation = reservationMapper.mapReservationRequestDtoToReservation(reservationRequest);
-        User loggedUser = getCurrentlyLoggedUser();
-        reservation.setReservationMaker(loggedUser);
+
+        String loggedUserId = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        reservation.setReservationMakerId(loggedUserId);
 
         // If owner was not passed in request, currently logged user is a reservation owner
-        if (reservation.getOwner() == null) {
-            reservation.setOwner(loggedUser);
+        if (reservation.getOwnerId() == null) {
+            reservation.setOwnerId(loggedUserId);
         }
+
         reservation = reservationRepository.save(reservation);
         return reservationMapper.mapToReservationResponseDto(reservation);
     }
-
 
     @Transactional
     public void checkIfWorksiteIsAvailable(Long worksiteId, LocalDate startDate, LocalDate endDate) {
@@ -64,13 +58,6 @@ public class ReservationServiceImpl implements ReservationService {
             throw new SpaceStationException(Error.WORKSITE_ALREADY_BOOKED);
         }
     }
-
-    private User getCurrentlyLoggedUser() {
-        Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findByUsername(account.getUsername())
-                .orElseThrow(() -> new SpaceStationException(Error.USER_NOT_FOUND));
-    }
-
 
     @Override
     public void deleteById(Long reservationId) {
@@ -87,7 +74,7 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new SpaceStationException(Error.RESERVATION_NOT_FOUND));
         Reservation reservationRequest = reservationMapper.mapReservationRequestDtoToReservation(reservationRequestDto);
-        reservation.setOwner(reservationRequest.getOwner());
+        reservation.setOwnerId(reservationRequest.getOwnerId());
         reservation.setStartDate(reservationRequest.getStartDate());
         reservation.setEndDate(reservationRequest.getEndDate());
         reservation.setWorksite(reservationRequest.getWorksite());
@@ -95,5 +82,4 @@ public class ReservationServiceImpl implements ReservationService {
         reservation = reservationRepository.saveAndFlush(reservation);
         return reservationMapper.mapToReservationResponseDto(reservation);
     }
-
 }

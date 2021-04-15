@@ -10,8 +10,7 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     // Eliminate N+1 problem
-    @Query("SELECT r FROM Reservation r INNER JOIN FETCH r.reservationMaker INNER JOIN FETCH r.owner " +
-            "INNER JOIN FETCH r.worksite")
+    @Query("SELECT r FROM Reservation r INNER JOIN FETCH r.worksite")
     List<Reservation> findAll();
 
     @Query("SELECT r FROM Reservation r WHERE r.worksite.id = :worksiteId AND (" +
