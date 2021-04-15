@@ -30,8 +30,8 @@ CREATE TABLE reservations (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     worksite_id BIGINT NOT NULL,
-    reservation_maker_id BIGINT NOT NULL,
-    owner_id BIGINT NOT NULL,
+    reservation_maker_id VARCHAR(255) NOT NULL,
+    owner_id VARCHAR(255) NOT NULL,
 
     FOREIGN KEY (worksite_id)
         REFERENCES worksites(id)
@@ -61,14 +61,13 @@ VALUES
 
 INSERT INTO reservations (start_date, end_date, worksite_id, reservation_maker_id, owner_id)
 VALUES
-('2021-02-20', '2021-02-22', 1, 1, 1),
-('2021-02-20', '2021-02-22', 2, 3, 2),
-('2021-02-20', '2021-02-22', 3, 2, 4),
-('2021-03-21', '2021-03-24', 2, 1, 1),
-('2021-03-20', '2021-03-21', 1, 2, 2),
-
-('2021-03-26', '2021-03-30', 1, 4, 4),
-('2021-03-27', '2021-03-29', 2, 3, 3);
+('2021-02-20', '2021-02-22', 1, 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7', 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7'),
+('2021-02-20', '2021-02-22', 2, 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7', 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7'),
+('2021-02-20', '2021-02-22', 3, 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7', 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7'),
+('2021-03-21', '2021-03-24', 2, 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7', 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7'),
+('2021-03-20', '2021-03-21', 1, 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7', 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7'),
+('2021-03-26', '2021-03-30', 1, 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7', 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7'),
+('2021-03-27', '2021-03-29', 2, 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7', 'e65b0ee2-11a1-4f1d-9bdd-7989a5305bb7');
 
 
 

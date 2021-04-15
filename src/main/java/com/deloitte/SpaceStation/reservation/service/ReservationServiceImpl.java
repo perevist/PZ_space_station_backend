@@ -7,8 +7,8 @@ import com.deloitte.SpaceStation.reservation.model.ReservationRequestDto;
 import com.deloitte.SpaceStation.reservation.model.ReservationResponseDto;
 import com.deloitte.SpaceStation.reservation.repository.ReservationRepository;
 import com.deloitte.SpaceStation.reservation.util.ReservationMapper;
-import com.deloitte.SpaceStation.worksite.repository.WorksiteRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +22,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final ReservationMapper reservationMapper;
-    private final WorksiteRepository worksiteRepository;
 
     @Override
     public List<ReservationResponseDto> getReservations() {
@@ -33,7 +32,21 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public ReservationResponseDto addReservation(ReservationRequestDto reservationRequest) {
-        throw new RuntimeException("Not implemented yet");
+        checkIfWorksiteIsAvailable(reservationRequest.getWorksiteId(), reservationRequest.getStartDate(),
+                reservationRequest.getEndDate());
+
+        Reservation reservation = reservationMapper.mapReservationRequestDtoToReservation(reservationRequest);
+
+        String loggedUserId = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        reservation.setReservationMakerId(loggedUserId);
+
+        // If owner was not passed in request, currently logged user is a reservation owner
+        if (reservation.getOwnerId() == null) {
+            reservation.setOwnerId(loggedUserId);
+        }
+
+        reservation = reservationRepository.save(reservation);
+        return reservationMapper.mapToReservationResponseDto(reservation);
     }
 
     @Transactional
@@ -45,7 +58,6 @@ public class ReservationServiceImpl implements ReservationService {
             throw new SpaceStationException(Error.WORKSITE_ALREADY_BOOKED);
         }
     }
-
 
     @Override
     public void deleteById(Long reservationId) {

@@ -9,8 +9,12 @@ import java.time.LocalDate;
 @Builder
 public class ReservationResponseDto {
     private Long id;
-    private Long reservationMakerId;
-    private Long ownerId;
+    private String reservationMakerId;
+    private String reservationMakerFirstName;
+    private String reservationMakerLastName;
+    private String ownerId;
+    private String ownerFirstName;
+    private String ownerLastName;
     private Long worksiteId;
     private Long roomId;
     private Long worksiteInRoomId;

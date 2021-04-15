@@ -18,9 +18,9 @@ public class Reservation {
     @JoinColumn(name = "worksite_id")
     private Worksite worksite;
     @Column(name = "reservation_maker_id")
-    private Long reservationMakerId;
-    @JoinColumn(name = "owner_id")
-    private Long ownerId;
+    private String reservationMakerId;
+    @Column(name = "ownerId")
+    private String ownerId;
     @Column(name = "start_date")
     private LocalDate startDate;
     @Column(name = "end_date")
