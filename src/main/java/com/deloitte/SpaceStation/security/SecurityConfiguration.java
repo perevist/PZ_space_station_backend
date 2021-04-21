@@ -39,9 +39,12 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
                 .antMatchers(HttpMethod.POST, "/api/rooms/**")
                 .hasRole("admin")
                 .antMatchers("/hello").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
+
+        http.headers().frameOptions().sameOrigin();
     }
 
     @Autowired
