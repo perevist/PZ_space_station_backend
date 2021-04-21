@@ -17,6 +17,8 @@ public class ReservationResponseDto {
     private String ownerLastName;
     private Long worksiteId;
     private Long roomId;
+    private String roomName;
+    private Long floor;
     private Long worksiteInRoomId;
     private LocalDate startDate;
     private LocalDate endDate;

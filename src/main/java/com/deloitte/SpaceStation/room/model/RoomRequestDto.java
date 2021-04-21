@@ -10,7 +10,7 @@ public class RoomRequestDto {
     @NotNull(message = "Name can not be blank")
     private String name;
     @NotNull(message = "Floor can not be blank")
-    private int floor;
+    private Long floor;
     @NotNull(message = "Number od worksites can not be blank")
     @Positive(message = "Number od worksites must be a positive number")
     private Long numberOfWorksites;
