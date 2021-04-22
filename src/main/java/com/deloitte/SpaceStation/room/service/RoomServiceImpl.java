@@ -49,10 +49,21 @@ public class RoomServiceImpl implements RoomService {
         Room room = roomMapper.mapRoomRequestDtoToRoom(roomRequestDto);
         room = roomRepository.save(room);
 
-//        for (long worksiteInRoomId = 1; worksiteInRoomId <= roomRequestDto.getNumberOfWorksites(); worksiteInRoomId++) {
-//            worksiteService.addWorksite(worksiteInRoomId, room);
-//        }
+        // the worksites in the room are added first in the X axis and then in the Y axis
+        long y_move = 1L;
+        long x_move = 1L;
+        for (long worksiteInRoomId = 1; worksiteInRoomId <= roomRequestDto.getNumberOfWorksites(); worksiteInRoomId++) {
 
+            if (x_move > roomRequestDto.getDimensionX()) {
+                ++y_move;
+                x_move = 1L;
+            }
+            long coordinateX = x_move;
+            long coordinateY = y_move;
+            ++x_move;
+
+            worksiteService.addWorksite(worksiteInRoomId, room, coordinateX, coordinateY);
+        }
         return room;
     }
 

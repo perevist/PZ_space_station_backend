@@ -48,10 +48,12 @@ public class WorksiteServiceImpl implements WorksiteService {
     }
 
     @Override
-    public Worksite addWorksite(Long worksiteInRoomId, Room room) {
+    public Worksite addWorksite(Long worksiteInRoomId, Room room, Long coordinateX, Long coordinateY) {
         Worksite worksite = new Worksite();
         worksite.setWorksiteInRoomId(worksiteInRoomId);
         worksite.setRoom(room);
+        worksite.setCoordinateX(coordinateX);
+        worksite.setCoordinateY(coordinateY);
         worksite = worksiteRepository.save(worksite);
         return worksite;
     }
