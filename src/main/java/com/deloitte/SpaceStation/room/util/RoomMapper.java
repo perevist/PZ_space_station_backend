@@ -14,6 +14,8 @@ public class RoomMapper {
         room.setName(roomRequestDto.getName());
         room.setFloor(roomRequestDto.getFloor());
         room.setNumberOfWorksites(roomRequestDto.getNumberOfWorksites());
+        room.setDimensionX(roomRequestDto.getDimensionX());
+        room.setDimensionY(roomRequestDto.getDimensionY());
         return room;
     }
 }

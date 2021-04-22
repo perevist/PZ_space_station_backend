@@ -49,9 +49,9 @@ public class RoomServiceImpl implements RoomService {
         Room room = roomMapper.mapRoomRequestDtoToRoom(roomRequestDto);
         room = roomRepository.save(room);
 
-        for (long worksiteInRoomId = 1; worksiteInRoomId <= roomRequestDto.getNumberOfWorksites(); worksiteInRoomId++) {
-            worksiteService.addWorksite(worksiteInRoomId, room);
-        }
+//        for (long worksiteInRoomId = 1; worksiteInRoomId <= roomRequestDto.getNumberOfWorksites(); worksiteInRoomId++) {
+//            worksiteService.addWorksite(worksiteInRoomId, room);
+//        }
 
         return room;
     }

@@ -3,6 +3,7 @@ package com.deloitte.SpaceStation.room.controller;
 import com.deloitte.SpaceStation.room.model.Room;
 import com.deloitte.SpaceStation.room.model.RoomRequestDto;
 import com.deloitte.SpaceStation.room.service.RoomService;
+import com.deloitte.SpaceStation.room.util.RoomRequestValidator;
 import com.deloitte.SpaceStation.util.RequestDateValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,6 +23,7 @@ public class RoomController {
 
     private final RoomService roomService;
     private final RequestDateValidator requestDateValidator;
+    private final RoomRequestValidator roomRequestValidator;
 
     @GetMapping("/list")
     public List<Room> getRooms(@RequestParam(required = false)
@@ -46,6 +48,11 @@ public class RoomController {
 
     @PostMapping
     public Room addRoom(@RequestBody @Valid RoomRequestDto roomRequestDto) {
+        roomRequestValidator.validatePassedDimensionAndNumberOfWorksites(
+                roomRequestDto.getNumberOfWorksites(),
+                roomRequestDto.getDimensionX(),
+                roomRequestDto.getDimensionY());
+
         return roomService.addRoom(roomRequestDto);
     }
 }

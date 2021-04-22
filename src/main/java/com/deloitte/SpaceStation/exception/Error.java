@@ -27,7 +27,7 @@ public enum Error {
     RESERVATION_NOT_FOUND("Reservation not found", HttpStatus.NOT_FOUND),
 
     ROOM_NAME_IS_NOT_UNIQUE("A room with this name already exists", HttpStatus.CONFLICT),
-    ;
+    WRONG_ROOM_DIMENSIONS("Wrong dimensions of the room", HttpStatus.BAD_REQUEST);
 
     private final String message;
     private final HttpStatus httpStatus;

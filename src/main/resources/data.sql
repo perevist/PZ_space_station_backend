@@ -1,18 +1,13 @@
 DROP ALL OBJECTS;
 
 -- create tables --
-CREATE TABLE verification_tokens (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    token VARCHAR(255) NOT NULL,
-    user_id BIGINT NOT NULL,
-    expiry_date DATE NOT NULL
-);
-
 CREATE TABLE rooms (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(45),
     floor INT NOT NULL,
-    number_of_worksites BIGINT NOT NULL
+    number_of_worksites BIGINT NOT NULL,
+    dimension_x BIGINT NOT NULL,
+    dimension_y BIGINT NOT NULL
 );
 
 CREATE TABLE worksites (
@@ -39,15 +34,15 @@ CREATE TABLE reservations (
 );
 
 -- insert data --
-INSERT INTO rooms (name, floor, number_of_worksites)
+INSERT INTO rooms (name, floor, number_of_worksites, dimension_x, dimension_y)
 VALUES
-('Pokój 1', 1, 2),
-('Pokój 2', 1, 2),
-('Pokój 3', 1, 3),
-('Pokój 4', 1, 2),
-('Pokój 5', 2, 2),
-('Pokój 6', 2, 2),
-('Pokój 7', 2, 2);
+('Pokój 1', 1, 2, 2, 1),
+('Pokój 2', 1, 4, 2, 2),
+('Pokój 3', 1, 3, 4, 4),
+('Pokój 4', 1, 6, 3, 2),
+('Pokój 5', 2, 6, 2, 3),
+('Pokój 6', 2, 3, 1, 3),
+('Pokój 7', 2, 2, 3, 1);
 
 INSERT INTO worksites (room_id, worksite_in_room_id)
 VALUES
