@@ -12,7 +12,7 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int floor;
+    private Long floor;
     @Column(name = "number_of_worksites")
     private Long numberOfWorksites;
 }

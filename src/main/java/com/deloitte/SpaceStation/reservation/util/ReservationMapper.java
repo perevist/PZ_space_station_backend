@@ -5,6 +5,7 @@ import com.deloitte.SpaceStation.exception.SpaceStationException;
 import com.deloitte.SpaceStation.reservation.model.Reservation;
 import com.deloitte.SpaceStation.reservation.model.ReservationRequestDto;
 import com.deloitte.SpaceStation.reservation.model.ReservationResponseDto;
+import com.deloitte.SpaceStation.room.model.Room;
 import com.deloitte.SpaceStation.user.model.User;
 import com.deloitte.SpaceStation.user.service.UserService;
 import com.deloitte.SpaceStation.worksite.model.Worksite;
@@ -58,6 +59,8 @@ public class ReservationMapper {
                 .ownerLastName(reservationOwner.getLastName())
                 .worksiteId(reservation.getWorksite().getId())
                 .roomId(reservation.getWorksite().getRoom().getId())
+                .roomName(reservation.getWorksite().getRoom().getName())
+                .floor(reservation.getWorksite().getRoom().getFloor())
                 .worksiteInRoomId(reservation.getWorksite().getWorksiteInRoomId())
                 .startDate(reservation.getStartDate())
                 .endDate(reservation.getEndDate())
