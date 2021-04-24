@@ -15,4 +15,8 @@ public class Room {
     private Long floor;
     @Column(name = "number_of_worksites")
     private Long numberOfWorksites;
+    @Column(name = "dimension_x")
+    private Long dimensionX;
+    @Column(name = "dimension_y")
+    private Long dimensionY;
 }

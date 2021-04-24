@@ -19,4 +19,8 @@ public class Worksite {
     private Room room;
     @JoinColumn(name = "worksite_in_room_id")
     private Long worksiteInRoomId;
+    @Column(name = "coordinate_x")
+    private Long coordinateX;
+    @Column(name = "coordinate_y")
+    private Long coordinateY;
 }

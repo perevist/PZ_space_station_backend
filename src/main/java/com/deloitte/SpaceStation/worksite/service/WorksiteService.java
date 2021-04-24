@@ -16,5 +16,5 @@ public interface WorksiteService {
 
     List<WorksiteResponseDto> getWorksitesByRoomAndAvailabilityDate(Long roomId, LocalDate startDate, LocalDate endDate);
 
-    Worksite addWorksite(Long worksiteInRoomId, Room room);
+    Worksite addWorksite(Long worksiteInRoomId, Room room, Long coordinateX, Long coordinateY);
 }

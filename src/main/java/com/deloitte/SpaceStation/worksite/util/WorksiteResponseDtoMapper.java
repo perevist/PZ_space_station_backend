@@ -15,6 +15,8 @@ public class WorksiteResponseDtoMapper {
                 .worksiteId(worksite.getId())
                 .worksiteInRoomId(worksite.getWorksiteInRoomId())
                 .roomId(worksite.getRoom().getId())
+                .coordinateX(worksite.getCoordinateX())
+                .coordinateY(worksite.getCoordinateY())
                 .build();
     }
 }

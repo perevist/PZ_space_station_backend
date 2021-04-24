@@ -1,24 +1,21 @@
 DROP ALL OBJECTS;
 
 -- create tables --
-CREATE TABLE verification_tokens (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    token VARCHAR(255) NOT NULL,
-    user_id BIGINT NOT NULL,
-    expiry_date DATE NOT NULL
-);
-
 CREATE TABLE rooms (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(45),
     floor INT NOT NULL,
-    number_of_worksites BIGINT NOT NULL
+    number_of_worksites BIGINT NOT NULL,
+    dimension_x BIGINT NOT NULL,
+    dimension_y BIGINT NOT NULL
 );
 
 CREATE TABLE worksites (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     room_id BIGINT NOT NULL,
     worksite_in_room_id BIGINT NOT NULL,
+    coordinate_x BIGINT NOT NULL,
+    coordinate_y BIGINT NOT NULL,
 
     FOREIGN KEY (room_id)
         REFERENCES rooms(id)
@@ -39,25 +36,25 @@ CREATE TABLE reservations (
 );
 
 -- insert data --
-INSERT INTO rooms (name, floor, number_of_worksites)
+INSERT INTO rooms (name, floor, number_of_worksites, dimension_x, dimension_y)
 VALUES
-('Pokój 1', 1, 2),
-('Pokój 2', 1, 2),
-('Pokój 3', 1, 3),
-('Pokój 4', 1, 2),
-('Pokój 5', 2, 2),
-('Pokój 6', 2, 2),
-('Pokój 7', 2, 2);
+('Pokój 1', 1, 2, 2, 1),
+('Pokój 2', 1, 4, 2, 2),
+('Pokój 3', 1, 3, 1, 4),
+('Pokój 4', 1, 6, 3, 2),
+('Pokój 5', 2, 6, 2, 3),
+('Pokój 6', 2, 3, 1, 3),
+('Pokój 7', 2, 2, 3, 1);
 
-INSERT INTO worksites (room_id, worksite_in_room_id)
+INSERT INTO worksites (room_id, worksite_in_room_id, coordinate_x, coordinate_y)
 VALUES
-(1, 1), (1, 2),
-(2, 1), (2, 2), (2, 3), (2, 4), (2, 5),
-(3, 1), (3, 2), (3, 3),
-(4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (4, 6),
-(5, 1), (5, 2), (5, 3), (5, 4), (5, 5), (5, 6),
-(6, 1), (6, 2), (6, 3),
-(7, 1), (7, 2);
+(1, 1, 1, 1), (1, 2, 2, 1),
+(2, 1, 1, 1), (2, 2, 1, 2), (2, 3, 2, 1), (2, 4, 2, 2),
+(3, 1, 1, 1), (3, 2, 1, 2), (3, 3, 1, 3),
+(4, 1, 1, 1), (4, 2, 1, 2), (4, 3, 2, 1), (4, 4, 2, 2), (4, 5, 3, 1), (4, 6, 3, 2),
+(5, 1, 1, 1), (5, 2, 1, 2), (5, 3, 2, 1), (5, 4, 2, 2), (5, 5, 3, 1), (5, 6, 3, 2),
+(6, 1, 1, 1), (6, 2, 1, 2), (6, 3, 1, 3),
+(7, 1, 1, 1), (7, 2, 2, 1);
 
 INSERT INTO reservations (start_date, end_date, worksite_id, reservation_maker_id, owner_id)
 VALUES
