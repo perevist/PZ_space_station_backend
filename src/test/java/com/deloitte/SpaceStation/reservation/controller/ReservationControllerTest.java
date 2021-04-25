@@ -1,4 +1,4 @@
-package com.deloitte.SpaceStation.reservation;
+package com.deloitte.SpaceStation.reservation.controller;
 
 import com.deloitte.SpaceStation.AbstractTest;
 import com.deloitte.SpaceStation.reservation.controller.ReservationController;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ReservationControllerTest extends AbstractTest {
+public class  ReservationControllerTest extends AbstractTest {
 
     @Autowired
     private ReservationController controller;

@@ -1,10 +1,12 @@
 package com.deloitte.SpaceStation.room.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import javax.persistence.*;
 
 @Entity
 @Data
+@AllArgsConstructor
 @Table(name = "rooms")
 public class Room {
 
@@ -19,4 +21,7 @@ public class Room {
     private Long dimensionX;
     @Column(name = "dimension_y")
     private Long dimensionY;
+
+    public Room() {
+    }
 }

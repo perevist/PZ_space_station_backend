@@ -34,13 +34,17 @@ public class ReservationServiceImpl implements ReservationService {
                 .collect(Collectors.toList());
     }
 
+    public List<ReservationResponseDto> getAll() {
+        return reservationRepository.findAll().stream()
+                .map(reservationMapper::mapToReservationResponseDto)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public List<ReservationResponseDto> getReservationsByDate(LocalDate startDate, LocalDate endDate, int page) {
         return reservationRepository.findAllByDate(startDate, endDate, PageRequest.of(page, PAGE_SIZE)).stream()
                 .map(reservationMapper::mapToReservationResponseDto)
                 .collect(Collectors.toList());
-
     }
 
     @Override
@@ -50,7 +54,6 @@ public class ReservationServiceImpl implements ReservationService {
                 startDate, endDate, ownerId, PageRequest.of(page, PAGE_SIZE)).stream()
                 .map(reservationMapper::mapToReservationResponseDto)
                 .collect(Collectors.toList());
-
     }
 
     @Override

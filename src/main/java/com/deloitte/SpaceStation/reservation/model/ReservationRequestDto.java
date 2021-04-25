@@ -1,6 +1,7 @@
 package com.deloitte.SpaceStation.reservation.model;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.FutureOrPresent;
@@ -8,7 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
-@Getter
+@Data
+@AllArgsConstructor
 public class ReservationRequestDto {
     @NotNull(message = "Worksite id can not be blank")
     @Positive(message = "Worksite id must be a positive number")

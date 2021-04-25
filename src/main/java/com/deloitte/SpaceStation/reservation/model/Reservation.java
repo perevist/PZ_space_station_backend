@@ -1,13 +1,18 @@
 package com.deloitte.SpaceStation.reservation.model;
 
 import com.deloitte.SpaceStation.worksite.model.Worksite;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Data
+@Builder
+@AllArgsConstructor
 @Table(name = "reservations")
 public class Reservation {
 
@@ -25,4 +30,7 @@ public class Reservation {
     private LocalDate startDate;
     @Column(name = "end_date")
     private LocalDate endDate;
+
+    public Reservation(){
+    }
 }

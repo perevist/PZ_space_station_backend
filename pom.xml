@@ -109,6 +109,13 @@
 			<artifactId>test-arranger</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<version>5.2.10.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+
 
 
 
