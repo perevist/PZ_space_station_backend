@@ -1,12 +1,14 @@
 package com.deloitte.SpaceStation.room.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import javax.persistence.*;
 
 @Entity
 @Data
 @AllArgsConstructor
+@Builder
 @Table(name = "rooms")
 public class Room {
 

@@ -6,8 +6,6 @@ import com.deloitte.SpaceStation.reservation.model.ReservationRequestDto;
 import com.deloitte.SpaceStation.reservation.model.ReservationResponseDto;
 import com.deloitte.SpaceStation.reservation.repository.ReservationRepository;
 import com.deloitte.SpaceStation.reservation.util.ReservationMapper;
-import com.deloitte.SpaceStation.room.model.Room;
-import com.deloitte.SpaceStation.worksite.model.Worksite;
 import com.ocadotechnology.gembus.test.Arranger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,11 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -67,7 +61,7 @@ class ReservationServiceImplTest {
     void shouldAddNewReservation() {
         // given
         Long worksiteId = 1L;
-        String ownerId = Arranger.someText(5,20);
+        String ownerId = Arranger.someText(5, 20);
         LocalDate startDate = LocalDate.of(2021, 7, 2);
         LocalDate endDate = LocalDate.of(2021, 7, 6);
         ReservationRequestDto request = new ReservationRequestDto(worksiteId, ownerId, startDate, endDate);
@@ -93,7 +87,7 @@ class ReservationServiceImplTest {
     void shouldThrowExceptionDuringAddingReservationIfWorksiteIsAlreadyBooked() {
         // given
         Long worksiteId = 1L;
-        String ownerId = Arranger.someText(5,20);
+        String ownerId = Arranger.someText(5, 20);
         LocalDate startDate = LocalDate.of(2021, 7, 2);
         LocalDate endDate = LocalDate.of(2021, 7, 6);
         ReservationRequestDto request = new ReservationRequestDto(worksiteId, ownerId, startDate, endDate);
