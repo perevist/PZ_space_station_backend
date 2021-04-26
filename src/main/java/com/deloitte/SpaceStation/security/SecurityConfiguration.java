@@ -36,6 +36,10 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
         super.configure(http);
         http.csrf().disable();
         http.authorizeRequests()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/v2/api-docs").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/rooms/**")
                 .hasRole("admin")
                 .antMatchers("/hello").permitAll()
