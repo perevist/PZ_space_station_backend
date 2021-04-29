@@ -23,7 +23,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final ReservationMapper reservationMapper;
-    private final static int PAGE_SIZE = 8;
+    private final static int PAGE_SIZE = 10;
 
     @Override
     public List<ReservationResponseDto> getReservations(int page) {
@@ -89,6 +89,25 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
+    @Transactional
+    public void checkIfWorksiteIsAvailableWhenPutReservation(
+            Long worksiteId, LocalDate startDate, LocalDate endDate, Long reservationId) {
+        List<Reservation> bookedReservations = reservationRepository.
+                findAllByBookedWorksite(worksiteId, startDate, endDate);
+
+        // if the current/processed reservation (with the same reservationId) is to be edited
+        if (bookedReservations.size() == 1) {
+            if (bookedReservations.get(0).getId().equals(reservationId)) {
+                bookedReservations.remove(0);
+            }
+        }
+
+        if (bookedReservations.size() != 0) {
+            throw new SpaceStationException(Error.WORKSITE_ALREADY_BOOKED);
+        }
+    }
+
+
     @Override
     public void deleteById(Long reservationId) {
         reservationRepository.findById(reservationId)
@@ -98,11 +117,21 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public ReservationResponseDto putReservation(Long id, ReservationRequestDto reservationRequestDto) {
-        checkIfWorksiteIsAvailable(reservationRequestDto.getWorksiteId(), reservationRequestDto.getStartDate(),
-                reservationRequestDto.getEndDate());
-
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new SpaceStationException(Error.RESERVATION_NOT_FOUND));
+
+        if (reservation.getOwnerId().equals(reservationRequestDto.getOwnerId()) ||
+                (reservation.getEndDate() != reservationRequestDto.getEndDate() &&
+                        reservation.getStartDate() != reservationRequestDto.getStartDate() &&
+                        !reservation.getWorksite().getId().equals(reservationRequestDto.getWorksiteId()))) {
+
+            checkIfWorksiteIsAvailableWhenPutReservation(
+                    reservationRequestDto.getWorksiteId(),
+                    reservationRequestDto.getStartDate(),
+                    reservationRequestDto.getEndDate(),
+                    reservation.getId());
+        }
+
         Reservation reservationRequest = reservationMapper.mapReservationRequestDtoToReservation(reservationRequestDto);
         reservation.setOwnerId(reservationRequest.getOwnerId());
         reservation.setStartDate(reservationRequest.getStartDate());
