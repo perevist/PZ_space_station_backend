@@ -11,7 +11,7 @@ class RoomRequestValidatorTest {
     RoomRequestValidator roomRequestValidator = new RoomRequestValidator();
 
     @Test
-    void shouldThrowExceptionIfNumberOfWorksitesIsToLow() {
+    void shouldThrowExceptionIfNumberOfWorksitesIsToHigh() {
 
         //given
         Long numberOfWorksites = 101L;
