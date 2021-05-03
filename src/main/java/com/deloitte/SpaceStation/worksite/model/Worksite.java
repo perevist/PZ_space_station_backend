@@ -3,6 +3,7 @@ package com.deloitte.SpaceStation.worksite.model;
 import com.deloitte.SpaceStation.room.model.Room;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @AllArgsConstructor
+@Builder
 @Table(name = "worksites")
 public class Worksite {
     @Id

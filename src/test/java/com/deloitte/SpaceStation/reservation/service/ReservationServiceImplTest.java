@@ -1,5 +1,6 @@
 package com.deloitte.SpaceStation.reservation.service;
 
+import com.deloitte.SpaceStation.SecurityContextHelper;
 import com.deloitte.SpaceStation.exception.SpaceStationException;
 import com.deloitte.SpaceStation.reservation.model.Reservation;
 import com.deloitte.SpaceStation.reservation.model.ReservationRequestDto;
@@ -12,7 +13,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
@@ -22,7 +26,8 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -43,7 +48,7 @@ class ReservationServiceImplTest {
     void setUp() {
         Mockito.when(reservationRepository.findAll())
                 .thenReturn(ReservationServiceImplTestHelper.createReservations(NUMBER_OF_RESERVATIONS));
-        ReservationServiceImplTestHelper.createSecurityContext(LOGGED_USER_ID);
+        SecurityContextHelper.createSecurityContext(LOGGED_USER_ID);
     }
 
     @Test
