@@ -7,23 +7,22 @@ import com.deloitte.SpaceStation.reservation.model.ReservationResponseDto;
 import com.deloitte.SpaceStation.reservation.repository.ReservationRepository;
 import com.deloitte.SpaceStation.reservation.util.ReservationMapper;
 import com.ocadotechnology.gembus.test.Arranger;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -38,7 +37,7 @@ class ReservationServiceImplTest {
     private ReservationMapper reservationMapper;
 
     @InjectMocks
-    private ReservationServiceImpl reservationService;
+    private ReservationServiceImpl reservationServiceImpl;
 
     @BeforeEach
     void setUp() {
@@ -51,14 +50,127 @@ class ReservationServiceImplTest {
     void shouldGetAllReservations() {
         // given
         // when
-        List<ReservationResponseDto> reservations = reservationService.getAll();
+        List<ReservationResponseDto> reservations = reservationServiceImpl.getAllReservations();
 
         // then
         assertThat(reservations).hasSize(10);
     }
 
     @Test
-    void shouldAddNewReservation() {
+    void shouldGetReservationsByDate() {
+        // given
+        int page = 1;
+        int pageSize = reservationServiceImpl.getPageSize();
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        LocalDate startDate = LocalDate.of(2021, 6, 20);
+        LocalDate endDate = LocalDate.of(2021, 6, 25);
+
+        Reservation foundReservation = Reservation.builder()
+                .startDate(startDate)
+                .endDate(endDate)
+                .build();
+
+        Mockito.when(reservationRepository.findAllByDate(startDate, endDate, pageRequest))
+                .thenReturn(Arrays.asList(foundReservation));
+        Mockito.when(reservationMapper.mapToReservationResponseDto(foundReservation)).thenReturn(
+                ReservationResponseDto.builder()
+                        .startDate(startDate)
+                        .endDate(endDate)
+                        .build()
+        );
+
+        // when
+        List<ReservationResponseDto> reservations = reservationServiceImpl.getReservationsByDate(startDate, endDate, page);
+
+        // then
+        // Check if method from repository was invoked correctly
+        Mockito.verify(reservationRepository).findAllByDate(startDate, endDate, pageRequest);
+
+        // Check if returned result is correctly
+        for (ReservationResponseDto reservation : reservations) {
+            assertThat(reservation.getStartDate()).isEqualTo(startDate.toString());
+            assertThat(reservation.getEndDate()).isEqualTo(endDate.toString());
+        }
+    }
+
+    @Test
+    void shouldGetReservationsByDateAndOwnerId() {
+        // given
+        int page = 1;
+        int pageSize = reservationServiceImpl.getPageSize();
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        String ownerId = Arranger.someText(5, 20);
+        LocalDate startDate = LocalDate.of(2021, 6, 20);
+        LocalDate endDate = LocalDate.of(2021, 6, 25);
+
+        Reservation foundReservation = Reservation.builder()
+                .ownerId(ownerId)
+                .startDate(startDate)
+                .endDate(endDate)
+                .build();
+
+        Mockito.when(reservationRepository.findAllByDateAndOwnerId(startDate, endDate, ownerId, pageRequest))
+                .thenReturn(Arrays.asList(foundReservation));
+        Mockito.when(reservationMapper.mapToReservationResponseDto(foundReservation)).thenReturn(
+                ReservationResponseDto.builder()
+                        .ownerId(ownerId)
+                        .startDate(startDate)
+                        .endDate(endDate)
+                        .build()
+        );
+
+        // when
+        List<ReservationResponseDto> reservations = reservationServiceImpl
+                .getReservationsByDateAndOwnerId(startDate, endDate, ownerId, page);
+
+        // then
+        // Check if method from repository was invoked correctly
+        Mockito.verify(reservationRepository).findAllByDateAndOwnerId(startDate, endDate, ownerId, pageRequest);
+
+        // Check if returned result is correctly
+        for (ReservationResponseDto reservation : reservations) {
+            assertThat(reservation.getStartDate()).isEqualTo(startDate.toString());
+            assertThat(reservation.getEndDate()).isEqualTo(endDate.toString());
+            assertThat(reservation.getOwnerId()).isEqualTo(ownerId);
+        }
+    }
+
+    @Test
+    void shouldGetReservationsByOwnerId() {
+        // given
+        int page = 1;
+        int pageSize = reservationServiceImpl.getPageSize();
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        String ownerId = Arranger.someText(5, 20);
+
+        Reservation foundReservation = Reservation.builder()
+                .ownerId(ownerId)
+                .build();
+
+        Mockito.when(reservationRepository.findAllByOwnerId(ownerId, pageRequest))
+                .thenReturn(Arrays.asList(foundReservation));
+        Mockito.when(reservationMapper.mapToReservationResponseDto(foundReservation)).thenReturn(
+                ReservationResponseDto.builder()
+                        .ownerId(ownerId)
+                        .build()
+        );
+
+        // when
+        List<ReservationResponseDto> reservations = reservationServiceImpl
+                .getReservationsByOwnerId(ownerId, page);
+
+        // then
+        // Check if method from repository was invoked correctly
+        Mockito.verify(reservationRepository).findAllByOwnerId(ownerId, pageRequest);
+
+        // Check if returned result is correctly
+        for (ReservationResponseDto reservation : reservations) {
+            assertThat(reservation.getOwnerId()).isEqualTo(ownerId);
+        }
+    }
+
+    @Test
+    void shouldAddNewReservationIfWorksiteIsAvailable() {
         // given
         Long worksiteId = 1L;
         String ownerId = Arranger.someText(5, 20);
@@ -70,17 +182,30 @@ class ReservationServiceImplTest {
         Mockito.when(reservationRepository.findAllByBookedWorksite(worksiteId, startDate, endDate))
                 .thenReturn(Arrays.asList());
 
-        Reservation reservation = new Reservation(1L, null, "abc1234", "abc1234",
-                startDate, endDate);
+        Reservation reservation = Reservation.builder()
+                .ownerId(ownerId)
+                .startDate(startDate)
+                .endDate(endDate)
+                .build();
+
         Mockito.when(reservationMapper.mapReservationRequestDtoToReservation(request))
                 .thenReturn(reservation);
 
         // when
-        reservationService.addReservation(request);
+        reservationServiceImpl.addReservation(request);
 
         // then
-        Mockito.verify(reservationRepository, Mockito.times(1))
-                .save(ArgumentMatchers.any(Reservation.class));
+        ArgumentCaptor<Reservation> reservationCaptor = ArgumentCaptor.forClass(Reservation.class);
+
+        // Check if method from repository was invoked
+        Mockito.verify(reservationRepository).save(reservationCaptor.capture());
+
+        // Check if passed parameters to the method were correctly
+        Assertions.assertAll(
+                () -> assertThat(reservationCaptor.getValue().getOwnerId()).isEqualTo(ownerId),
+                () -> assertThat(reservationCaptor.getValue().getStartDate()).isEqualTo(startDate.toString()),
+                () -> assertThat(reservationCaptor.getValue().getEndDate()).isEqualTo(endDate.toString())
+        );
     }
 
     @Test
@@ -96,13 +221,46 @@ class ReservationServiceImplTest {
         Mockito.when(reservationRepository.findAllByBookedWorksite(worksiteId, startDate, endDate))
                 .thenReturn(Arrays.asList(new Reservation()));
 
-        Reservation reservation = new Reservation(1L, null, "abc1234", "abc1234",
-                startDate, endDate);
+        // when
+        assertThatThrownBy(() -> reservationServiceImpl.addReservation(request))
+                .isInstanceOf(SpaceStationException.class);
+    }
+
+    @Test
+    @DisplayName("Should add reservation if ownerId is not passed in request. The ownerId should be reservationMakerId")
+    void shouldAddReservationIfOwnerIdIsNotPassedInRequest() {
+        // given
+        Long worksiteId = 1L;
+        LocalDate startDate = LocalDate.of(2021, 7, 2);
+        LocalDate endDate = LocalDate.of(2021, 7, 6);
+        ReservationRequestDto request = new ReservationRequestDto(worksiteId, startDate, endDate);
+
+        // If the worksite is not booked, the list will be empty
+        Mockito.when(reservationRepository.findAllByBookedWorksite(worksiteId, startDate, endDate))
+                .thenReturn(Arrays.asList());
+
+        Reservation reservation = Reservation.builder()
+                .startDate(startDate)
+                .endDate(endDate)
+                .build();
+
         Mockito.when(reservationMapper.mapReservationRequestDtoToReservation(request))
                 .thenReturn(reservation);
 
         // when
-        assertThatThrownBy(() -> reservationService.addReservation(request))
-                .isInstanceOf(SpaceStationException.class);
+        reservationServiceImpl.addReservation(request);
+
+        // then
+        ArgumentCaptor<Reservation> reservationCaptor = ArgumentCaptor.forClass(Reservation.class);
+
+        // Check if method from repository was invoked
+        Mockito.verify(reservationRepository).save(reservationCaptor.capture());
+
+        // Check if passed parameters to the method were correctly
+        Assertions.assertAll(
+                () -> assertThat(reservationCaptor.getValue().getOwnerId()).isEqualTo(LOGGED_USER_ID),
+                () -> assertThat(reservationCaptor.getValue().getStartDate()).isEqualTo(startDate.toString()),
+                () -> assertThat(reservationCaptor.getValue().getEndDate()).isEqualTo(endDate.toString())
+        );
     }
 }

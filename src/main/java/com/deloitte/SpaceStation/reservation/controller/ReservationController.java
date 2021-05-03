@@ -42,7 +42,7 @@ public class ReservationController {
             if (ownerId != null) {
                 return reservationService.getReservationsByOwnerId(ownerId, pageNumber);
             } else {
-                return reservationService.getReservations(pageNumber);
+                return reservationService.getReservationsByPageNumber(pageNumber);
             }
         }
     }

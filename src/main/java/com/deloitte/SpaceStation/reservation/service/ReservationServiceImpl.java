@@ -26,16 +26,17 @@ public class ReservationServiceImpl implements ReservationService {
     private final static int PAGE_SIZE = 8;
 
     @Override
-    public List<ReservationResponseDto> getReservations(int page) {
-        return reservationRepository.findAllReservations(
-                PageRequest.of(page, PAGE_SIZE))
-                .stream()
+    public List<ReservationResponseDto> getAllReservations() {
+        return reservationRepository.findAll().stream()
                 .map(reservationMapper::mapToReservationResponseDto)
                 .collect(Collectors.toList());
     }
 
-    public List<ReservationResponseDto> getAll() {
-        return reservationRepository.findAll().stream()
+    @Override
+    public List<ReservationResponseDto> getReservationsByPageNumber(int page) {
+        return reservationRepository.findAllReservations(
+                PageRequest.of(page, PAGE_SIZE))
+                .stream()
                 .map(reservationMapper::mapToReservationResponseDto)
                 .collect(Collectors.toList());
     }
@@ -114,5 +115,9 @@ public class ReservationServiceImpl implements ReservationService {
 
         reservation = reservationRepository.saveAndFlush(reservation);
         return reservationMapper.mapToReservationResponseDto(reservation);
+    }
+
+    public int getPageSize() {
+        return PAGE_SIZE;
     }
 }

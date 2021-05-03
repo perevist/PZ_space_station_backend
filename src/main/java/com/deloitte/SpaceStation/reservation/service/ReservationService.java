@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface ReservationService {
 
-    List<ReservationResponseDto> getReservations(int page);
+    List<ReservationResponseDto> getAllReservations();
+
+    List<ReservationResponseDto> getReservationsByPageNumber(int page);
 
     List<ReservationResponseDto> getReservationsByDate(LocalDate startDate, LocalDate endDate, int page);
 
