@@ -1,5 +1,6 @@
 package com.deloitte.SpaceStation.worksite.util;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -7,6 +8,7 @@ import javax.validation.constraints.Positive;
 import java.util.Objects;
 
 @Data
+@AllArgsConstructor
 public class Coordinates {
     @NotNull(message = "X dimension can not be blank")
     @Positive(message = "X dimension must be a positive number")

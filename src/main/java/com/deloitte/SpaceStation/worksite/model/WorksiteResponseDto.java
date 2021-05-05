@@ -1,5 +1,6 @@
 package com.deloitte.SpaceStation.worksite.model;
 
+import com.deloitte.SpaceStation.worksite.util.Coordinates;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,6 +12,5 @@ public class WorksiteResponseDto {
     private Long worksiteId;
     private Long worksiteInRoomId;
     private Long roomId;
-    private Long coordinateX;
-    private Long coordinateY;
+    private Coordinates coordinates;
 }

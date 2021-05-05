@@ -11,12 +11,12 @@ public class WorksiteResponseDtoMapper {
     }
 
     public static WorksiteResponseDto mapToWorksiteResponseDto(Worksite worksite) {
+
         return WorksiteResponseDto.builder()
                 .worksiteId(worksite.getId())
                 .worksiteInRoomId(worksite.getWorksiteInRoomId())
                 .roomId(worksite.getRoom().getId())
-                .coordinateX(worksite.getCoordinateX())
-                .coordinateY(worksite.getCoordinateY())
+                .coordinates(new Coordinates(worksite.getCoordinateX(), worksite.getCoordinateY()))
                 .build();
     }
 }
