@@ -27,7 +27,9 @@ public enum Error {
     RESERVATION_NOT_FOUND("Reservation not found", HttpStatus.NOT_FOUND),
 
     ROOM_NAME_IS_NOT_UNIQUE("A room with this name already exists", HttpStatus.CONFLICT),
-    WRONG_ROOM_DIMENSIONS("Wrong dimensions of the room", HttpStatus.BAD_REQUEST);
+    WRONG_ROOM_DIMENSIONS("Wrong dimensions of the room", HttpStatus.BAD_REQUEST),
+    PASSED_WORKSITES_ARE_NOT_UNIQUE("Passed worksites are not unique", HttpStatus.BAD_REQUEST),
+    WORKSITE_COORDINATES_ARE_TOO_LARGE("At least one of the passed worksite coordinates are too large", HttpStatus.BAD_REQUEST);
 
     private final String message;
     private final HttpStatus httpStatus;

@@ -6,6 +6,7 @@ import com.deloitte.SpaceStation.room.model.Room;
 import com.deloitte.SpaceStation.room.model.RoomRequestDto;
 import com.deloitte.SpaceStation.room.repository.RoomRepository;
 import com.deloitte.SpaceStation.room.util.RoomMapper;
+import com.deloitte.SpaceStation.worksite.model.WorksiteRequestDto;
 import com.deloitte.SpaceStation.worksite.service.WorksiteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,20 +50,15 @@ public class RoomServiceImpl implements RoomService {
         Room room = roomMapper.mapRoomRequestDtoToRoom(roomRequestDto);
         room = roomRepository.save(room);
 
-        // the worksites in the room are added first in the X axis and then in the Y axis
-        long y_move = 1L;
-        long x_move = 1L;
-        for (long worksiteInRoomId = 1; worksiteInRoomId <= roomRequestDto.getNumberOfWorksites(); worksiteInRoomId++) {
+        List<WorksiteRequestDto> worksites = roomRequestDto.getWorksites();
 
-            if (x_move > roomRequestDto.getDimensionX()) {
-                ++y_move;
-                x_move = 1L;
-            }
-            long coordinateX = x_move;
-            long coordinateY = y_move;
-            ++x_move;
-
-            worksiteService.addWorksite(worksiteInRoomId, room, coordinateX, coordinateY);
+        for (WorksiteRequestDto worksite : worksites) {
+            worksiteService.addWorksite(
+                    worksite.getWorksiteInRoomId(),
+                    room,
+                    worksite.getCoordinates().getX(),
+                    worksite.getCoordinates().getY()
+            );
         }
         return room;
     }

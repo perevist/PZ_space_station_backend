@@ -48,11 +48,7 @@ public class RoomController {
 
     @PostMapping
     public Room addRoom(@RequestBody @Valid RoomRequestDto roomRequestDto) {
-        roomRequestValidator.validatePassedDimensionAndNumberOfWorksites(
-                roomRequestDto.getNumberOfWorksites(),
-                roomRequestDto.getDimensionX(),
-                roomRequestDto.getDimensionY());
-
+        roomRequestValidator.validateRequest(roomRequestDto);
         return roomService.addRoom(roomRequestDto);
     }
 }
