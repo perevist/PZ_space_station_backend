@@ -12,7 +12,14 @@ public interface ReservationService {
 
     List<ReservationResponseDto> getReservationsByDate(LocalDate startDate, LocalDate endDate, int page);
 
-    List<ReservationResponseDto> getReservationsByDateAndOwnerId(LocalDate startDate, LocalDate endDate, String userId, int page);
+    List<ReservationResponseDto> getReservationsByDateAndOwnerId(
+            LocalDate startDate, LocalDate endDate, String userId, int page);
+
+    List<ReservationResponseDto> getReservationsByDateAndOwnerIdAndReservationMakerId(
+            LocalDate startDate, LocalDate endDate, String ownerId, String reservationMakerId, int page);
+
+    List<ReservationResponseDto> getReservationsByOwnerIdAndReservationMakerId (
+            String ownerId, String reservationMakerId, int page);
 
     List<ReservationResponseDto> getReservationsByOwnerId(String ownerId, int page);
 

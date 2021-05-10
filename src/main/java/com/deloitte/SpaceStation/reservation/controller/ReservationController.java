@@ -27,6 +27,7 @@ public class ReservationController {
                                                        @RequestParam(required = false)
                                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
                                                        @RequestParam(required = false) String ownerId,
+                                                       @RequestParam(required = false) String reservationMakerId,
                                                        @RequestParam(required = false) Integer page) {
 
         int pageNumber = (page != null && page >= 1) ? page - 1 : 0;
@@ -34,12 +35,20 @@ public class ReservationController {
         if (startDate != null || endDate != null) {
             requestDateValidator.validatePassedDates(startDate, endDate);
             if (ownerId != null) {
+                if (reservationMakerId != null) {
+                    return reservationService.getReservationsByDateAndOwnerIdAndReservationMakerId(
+                            startDate, endDate, ownerId, reservationMakerId, pageNumber);
+                }
                 return reservationService.getReservationsByDateAndOwnerId(startDate, endDate, ownerId, pageNumber);
             } else {
                 return reservationService.getReservationsByDate(startDate, endDate, pageNumber);
             }
         } else {
             if (ownerId != null) {
+                if (reservationMakerId != null) {
+                    return reservationService.getReservationsByOwnerIdAndReservationMakerId(
+                            ownerId, reservationMakerId, pageNumber);
+                }
                 return reservationService.getReservationsByOwnerId(ownerId, pageNumber);
             } else {
                 return reservationService.getReservations(pageNumber);
