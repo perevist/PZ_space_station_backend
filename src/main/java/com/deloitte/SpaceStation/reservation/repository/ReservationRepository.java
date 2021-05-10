@@ -23,9 +23,18 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findAllByDateAndOwnerId(LocalDate startDate, LocalDate endDate, String ownerId, Pageable pageable);
 
     @Query("SELECT r FROM Reservation r " +
+            "WHERE ((r.startDate >= :startDate AND r.endDate <= :endDate) AND " +
+            "(r.ownerId = :ownerId OR r.reservationMakerId = :reservationMakerId))")
+    List<Reservation> findAllByDateAndOwnerIdAndReservationMakerId(
+            LocalDate startDate, LocalDate endDate, String ownerId, String reservationMakerId, Pageable pageable);
+
+    @Query("SELECT r FROM Reservation r " +
             "WHERE r.ownerId = :ownerId ")
     List<Reservation> findAllByOwnerId(String ownerId, Pageable pageable);
 
+    @Query("SELECT r FROM Reservation r " +
+            "WHERE r.ownerId = :ownerId OR r.reservationMakerId = :reservationMakerId")
+    List<Reservation> findAllByOwnerIdAndReservationMakerId(String ownerId, String reservationMakerId, Pageable pageable);
 
     @Query("SELECT r FROM Reservation r WHERE r.worksite.id = :worksiteId AND (" +
             "(r.startDate BETWEEN :startDate AND :endDate) OR " +
@@ -34,6 +43,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findAllByBookedWorksite(Long worksiteId, LocalDate startDate, LocalDate endDate);
 
     void deleteById(Long id);
-
 
 }

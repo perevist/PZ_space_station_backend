@@ -50,7 +50,24 @@ public class ReservationServiceImpl implements ReservationService {
                 startDate, endDate, ownerId, PageRequest.of(page, PAGE_SIZE)).stream()
                 .map(reservationMapper::mapToReservationResponseDto)
                 .collect(Collectors.toList());
+    }
 
+    @Override
+    public List<ReservationResponseDto> getReservationsByDateAndOwnerIdAndReservationMakerId(
+            LocalDate startDate, LocalDate endDate, String ownerId, String reservationMakerId, int page) {
+        return reservationRepository.findAllByDateAndOwnerIdAndReservationMakerId(
+                startDate, endDate, ownerId, reservationMakerId, PageRequest.of(page, PAGE_SIZE)).stream()
+                .map(reservationMapper::mapToReservationResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReservationResponseDto> getReservationsByOwnerIdAndReservationMakerId(
+            String ownerId, String reservationMakerId, int page) {
+        return reservationRepository.findAllByOwnerIdAndReservationMakerId(
+                ownerId, reservationMakerId, PageRequest.of(page, PAGE_SIZE)).stream()
+                .map(reservationMapper::mapToReservationResponseDto)
+                .collect(Collectors.toList());
     }
 
     @Override
